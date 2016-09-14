@@ -4,6 +4,7 @@ defmodule TheTragedyOfTheCommons.Main do
 
   def init do
     %{
+      page: "waiting",
       participants: %{},
       participants_number: 0,
     }

@@ -1,6 +1,7 @@
 defmodule TheTragedyOfTheCommons.Participant do
   def filter_data(data, id, diff: diff) do
     map = %{
+      page: true,
       participants: %{
         id => true
       },
