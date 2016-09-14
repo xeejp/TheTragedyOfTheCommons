@@ -1,6 +1,6 @@
-defmodule YourApplication.Actions do
-  alias YourApplication.Participant
-  alias YourApplication.Host
+defmodule TheTragedyOfTheCommons.Actions do
+  alias TheTragedyOfTheCommons.Participant
+  alias TheTragedyOfTheCommons.Host
 
   def update_host_contents(data) do
     host = get_action("update contents", Host.filter_data(data, diff: false))
