@@ -1,4 +1,4 @@
-defmodule YourApplication.Participant do
+defmodule TheTragedyOfTheCommons.Participant do
   def filter_data(data, id, diff: diff) do
     map = %{
       participants: %{

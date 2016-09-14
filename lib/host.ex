@@ -1,4 +1,4 @@
-defmodule YourApplication.Host do
+defmodule TheTragedyOfTheCommons.Host do
   def filter_data(data, diff: diff) do
     map = %{
       _default: true,

@@ -1,8 +1,8 @@
-defmodule YourApplication do
+defmodule TheTragedyOfTheCommons do
   use XeeThemeScript
   require Logger
-  alias YourApplication.Main
-  alias YourApplication.Actions
+  alias TheTragedyOfTheCommons.Main
+  alias TheTragedyOfTheCommons.Actions
 
   # Callbacks
   def script_type do
@@ -21,7 +21,7 @@ defmodule YourApplication do
 
   # Host router
   def handle_received(data, %{"action" => action, "params" => params}) do
-    Logger.debug("[YourApplication] #{action} #{inspect params}")
+    Logger.debug("[TheTragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_host_contents(data)
       _ -> {:ok, %{data: data}}
@@ -31,7 +31,7 @@ defmodule YourApplication do
 
   # Participant router
   def handle_received(data, %{"action" => action, "params" => params}, id) do
-    Logger.debug("[YourApplication] #{action} #{inspect params}")
+    Logger.debug("[TheTragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_participant_contents(data, id)
       _ -> {:ok, %{data: data}}
