@@ -5,6 +5,12 @@ defmodule TheTragedyOfTheCommons.Main do
   def init do
     %{
       page: "waiting",
+      message: %{
+         description: [
+           %{id: 0, text: "A"},
+           %{id: 1, text: "B"},
+         ],
+       },
       participants: %{},
       participants_number: 0,
     }
@@ -12,7 +18,8 @@ defmodule TheTragedyOfTheCommons.Main do
 
   def new_participant do
     %{
-      id: nil
+      is_finish_description: false,
+      id: nil,
     }
   end
 

@@ -10,6 +10,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import Waiting from './Waiting'
+import Description from './Description'
 
 const actionCreators = {
   fetchContents
@@ -33,7 +34,10 @@ class App extends Component {
     const { page } = this.props
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
+        <div>
         { (page == "waiting") ? <Waiting /> : null }
+        { (page == "description") ? <Description /> : null }
+        </div>
       </MuiThemeProvider>
     )
   }

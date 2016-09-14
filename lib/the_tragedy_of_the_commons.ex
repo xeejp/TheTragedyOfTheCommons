@@ -34,6 +34,7 @@ defmodule TheTragedyOfTheCommons do
     Logger.debug("[TheTragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_participant_contents(data, id)
+      {"finish description", _} -> Participant.finish_description(data, id)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)
