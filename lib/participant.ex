@@ -1,6 +1,12 @@
 defmodule TheTragedyOfTheCommons.Participant do
+
+  def finish_description(data, id) do
+    update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
+  end
+
   def filter_data(data, id, diff: diff) do
     map = %{
+      _default: true,
       participants: %{
         id => true
       },
