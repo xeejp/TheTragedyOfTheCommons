@@ -9,6 +9,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
+import Experiment from './Experiment'
 import Waiting from './Waiting'
 import Description from './Description'
 
@@ -42,6 +43,7 @@ class App extends Component {
           ? <div>
               { (page == "waiting") ? <Waiting /> : null }
               { (page == "description") ? <Description /> : null }
+              { (page == "experiment") ? <Experiment /> : null }
           </div>
           : <Card>
               <CardTitle title="共有地の悲劇" subtitle="実験中"/>

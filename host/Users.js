@@ -28,7 +28,7 @@ const UsersList = ({participants, openParticipantPage}) => (
         Object.keys(participants).map(id => (
           <User
             key={id}
-            id={participants[id].id != null ? participants[id].id : id}
+            id={participants[id].id != null ? participants[id].id : "id : " + id}
             profit={participants[id].profit}
             grazingNum={participants[id].grazingNum}
             openParticipantPage={openParticipantPage}

@@ -3,6 +3,10 @@ defmodule TheTragedyOfTheCommons.Participant do
     update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
   end
 
+  def update_snum(data, id, snum) do
+    update_in(data, [:participants, id, :id], fn _ -> snum end)
+  end
+
   def get_filter(data, id) do
     %{
       _default: true,
