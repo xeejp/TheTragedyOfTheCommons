@@ -7,7 +7,8 @@ defmodule TheTragedyOfTheCommons.Host do
   def filter_data(data, diff: diff) do
     map = %{
       _default: true,
-      participants_number: "participantsNumber"
+      participants_number: "participantsNumber",
+      groups_number: "groupsNumber",
     }
     Transmap.transform(data, map, diff: diff)
   end

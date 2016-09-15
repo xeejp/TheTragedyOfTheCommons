@@ -11,8 +11,10 @@ defmodule TheTragedyOfTheCommons.Main do
            %{id: 1, text: "B"},
          ],
        },
+      groups: %{},
       participants: %{},
       participants_number: 0,
+      groups_number: 0,
     }
   end
 
@@ -20,6 +22,9 @@ defmodule TheTragedyOfTheCommons.Main do
     %{
       is_finish_description: false,
       id: nil,
+      profit: 0,
+      grazingNum: 0,
+      status: "waiting",
     }
   end
 

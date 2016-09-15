@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import { fetchContents } from 'shared/actions'
 
+import Divider from 'material-ui/Divider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
@@ -10,6 +11,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import PageStepper from './PageStepper'
+import Users from './Users'
 
 const actionCreators = {
   fetchContents
@@ -32,6 +34,13 @@ class App extends Component {
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
           <PageStepper />
+          <Divider
+            style={{
+              marginTop: '5%',
+              marginBottom: '5%',
+            }}
+          />
+          <Users />
         </div>
       </MuiThemeProvider>
     )
