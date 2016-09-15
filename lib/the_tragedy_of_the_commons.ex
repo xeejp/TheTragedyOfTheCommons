@@ -3,6 +3,8 @@ defmodule TheTragedyOfTheCommons do
   require Logger
   alias TheTragedyOfTheCommons.Main
   alias TheTragedyOfTheCommons.Actions
+  alias TheTragedyOfTheCommons.Host
+  alias TheTragedyOfTheCommons.Participant
 
   # Callbacks
   def script_type do
@@ -24,6 +26,7 @@ defmodule TheTragedyOfTheCommons do
     Logger.debug("[TheTragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_host_contents(data)
+      {"change page", page} -> Host.change_page(data, page)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)
