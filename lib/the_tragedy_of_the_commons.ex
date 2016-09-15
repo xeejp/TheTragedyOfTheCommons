@@ -3,6 +3,8 @@ defmodule TheTragedyOfTheCommons do
   require Logger
   alias TheTragedyOfTheCommons.Main
   alias TheTragedyOfTheCommons.Actions
+  alias TheTragedyOfTheCommons.Host
+  alias TheTragedyOfTheCommons.Participant
 
   # Callbacks
   def script_type do
