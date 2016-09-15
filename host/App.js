@@ -12,6 +12,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import PageStepper from './PageStepper'
 import Users from './Users'
+import MatchingButton from './MatchingButton'
 
 const actionCreators = {
   fetchContents
@@ -34,6 +35,13 @@ class App extends Component {
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
           <PageStepper />
+          <Divider
+            style={{
+              marginTop: '5%',
+              marginBottom: '5%',
+            }}
+          />
+          <MatchingButton />
           <Divider
             style={{
               marginTop: '5%',

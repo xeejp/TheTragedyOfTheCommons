@@ -16,8 +16,10 @@ const actionCreators = {
   fetchContents
 }
 
-const mapStateToProps = ({ page }) => ({
+const mapStateToProps = ({ page, joinable, group }) => ({
   page,
+  joinable,
+  group,
 })
 
 class App extends Component {
@@ -31,12 +33,24 @@ class App extends Component {
   }
 
   render() {
-    const { page } = this.props
+    const { page, joinable, group } = this.props
+    console.log(this.props)
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
-        { (page == "waiting") ? <Waiting /> : null }
-        { (page == "description") ? <Description /> : null }
+        { joinable || group != null
+          ? <div>
+              { (page == "waiting") ? <Waiting /> : null }
+              { (page == "description") ? <Description /> : null }
+          </div>
+          : <Card>
+              <CardTitle title="共有地の悲劇" subtitle="実験中"/>
+              <CardText>
+                <p>実験はすでに開始されています。</p>
+                <p>実験が終了するまでお待ちください。</p>
+              </CardText>
+          </Card>
+        }
         </div>
       </MuiThemeProvider>
     )

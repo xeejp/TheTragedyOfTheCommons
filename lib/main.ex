@@ -5,6 +5,7 @@ defmodule TheTragedyOfTheCommons.Main do
   def init do
     %{
       page: "waiting",
+      joinable: true,
       message: %{
          description: [
            %{id: 0, text: "A"},
@@ -14,6 +15,8 @@ defmodule TheTragedyOfTheCommons.Main do
       groups: %{},
       participants: %{},
       participants_number: 0,
+      active_participants_number: 0,
+      group_size: 4, # Number of members
       groups_number: 0,
     }
   end
@@ -25,12 +28,24 @@ defmodule TheTragedyOfTheCommons.Main do
       profit: 0,
       grazingNum: 0,
       status: "waiting",
+      group: nil,
+    }
+  end
+
+  def new_group(members) do
+    %{
+      members: members,
+      state: "waiting",
     }
   end
 
   def join(data, id) do
     unless Map.has_key?(data.participants, id) do
       new = new_participant()
+      if data.page == "waiting" do
+        data = Map.update!(data, :active_participants_number, fn n -> n + 1 end)
+      end
+
       data
       |> put_in([:participants, id], new)
       |> Map.update!(:participants_number, fn n -> n + 1 end)

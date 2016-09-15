@@ -6,21 +6,23 @@ import Badge from 'material-ui/Badge'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import PersonIcon from 'material-ui/svg-icons/social/person'
 import PeopleIcon from 'material-ui/svg-icons/social/people'
+import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline'
 
 import { openParticipantPage } from './actions'
 
-const User = ({ id, profit, grazingNum, openParticipantPage, status }) => (
+const User = ({ id, profit, grazingNum, openParticipantPage, status, group }) => (
   <tr>
     <td><a onClick={openParticipantPage(id)}>{id}</a></td>
     <td>{profit}</td>
     <td>{grazingNum}</td>
     <td>{status}</td>
+    <td>{group}</td>
   </tr>
 )
 
 const UsersList = ({participants, openParticipantPage}) => (
   <table>
-    <thead><tr><th>ID</th><th>Profit</th><th>Grazing Num</th><th>Status</th></tr></thead>
+    <thead><tr><th>ID</th><th>Profit</th><th>Grazing</th><th>Status</th><th>Group ID</th></tr></thead>
     <tbody>
       {
         Object.keys(participants).map(id => (
@@ -31,6 +33,7 @@ const UsersList = ({participants, openParticipantPage}) => (
             grazingNum={participants[id].grazingNum}
             openParticipantPage={openParticipantPage}
             status={participants[id].status}
+            group={participants[id].group}
           />
         ))
       }
@@ -38,8 +41,8 @@ const UsersList = ({participants, openParticipantPage}) => (
   </table>
 )
 
-const Group = ({ id, round, state, members }) => (
-  <tr><td>{id}</td><td>{round}</td><td>{state}</td><td>{members}</td></tr>
+const Group = ({ id, state, members }) => (
+  <tr><td>{id}</td><td>{state}</td><td>{members}</td></tr>
 )
 
 const Groups = ({ groups, participants }) => (
@@ -51,7 +54,6 @@ const Groups = ({ groups, participants }) => (
           <Group
             key={id}
             id={id}
-            round={groups[id].round}
             state={groups[id].state}
             members={groups[id].members.length}
           />
@@ -61,11 +63,12 @@ const Groups = ({ groups, participants }) => (
   </table>
 )
 
-const mapStateToProps = ({ groups, participants, participantsNumber, groupsNumber }) => ({
+const mapStateToProps = ({ groups, participants, participantsNumber, groupsNumber, activeParticipantsNumber }) => ({
   groups,
   participants,
   participantsNumber,
   groupsNumber,
+  activeParticipantsNumber,
 })
 
 const mapDispatchToProps = (dispatch) => {
@@ -82,12 +85,12 @@ class Users extends Component {
   }
 
   render() {
-    const { participants, groups, participantsNumber, groupsNumber, openParticipantPage } = this.props
+    const { participants, groups, participantsNumber, groupsNumber, openParticipantPage, activeParticipantsNumber } = this.props
     return (
       <div>
         <Card>
           <CardHeader
-            title={<div>ユーザー<Badge badgeContent={participantsNumber} primary={true}><PersonIcon /></Badge></div>}
+            title={<div>ユーザー<Badge badgeContent={String(activeParticipantsNumber)} primary={true}><PersonIcon /></Badge> ゲーム終了待機中のユーザー<Badge badgeContent={String(participantsNumber - activeParticipantsNumber)} secondary={true}><PersonOutlineIcon /></Badge></div>}
             actAsExpander={true}
             showExpandableButton={true}
           />
@@ -100,7 +103,7 @@ class Users extends Component {
         </Card>
         <Card>
           <CardHeader
-            title={<div>グループ<Badge badgeContent={groupsNumber} secondary={true}><PeopleIcon /></Badge></div>}
+            title={<div>グループ<Badge badgeContent={String(groupsNumber)} primary={true}><PeopleIcon /></Badge></div>}
             actAsExpander={true}
             showExpandableButton={true}
           />
