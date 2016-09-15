@@ -1,4 +1,9 @@
 defmodule TheTragedyOfTheCommons.Host do
+
+  def change_page(data, page) do
+    Map.update!(data, :page, fn _ -> page end)
+  end
+
   def filter_data(data, diff: diff) do
     map = %{
       _default: true,
