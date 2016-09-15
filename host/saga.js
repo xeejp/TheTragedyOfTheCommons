@@ -8,8 +8,8 @@ function* fetchContentsSaga() {
   yield call(sendData, 'fetch contents')
 }
 
-function* changePageSaga() {
-  const { payload } = yield take(`${changePage}`)
+function* changePageSaga(action) {
+  const { payload } = action
   yield call(sendData, 'change page', payload)
 }
 
