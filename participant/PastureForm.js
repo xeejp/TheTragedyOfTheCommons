@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
-import SelectField from 'material-ui/SelectField'
 import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 
 import { updateGrazing } from './actions'
 
