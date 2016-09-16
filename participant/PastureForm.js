@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
 import SelectField from 'material-ui/SelectField'
+import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { updateGrazing } from './actions'
@@ -78,15 +79,27 @@ class ProfitTable extends Component {
 class PastureForm extends Component {
   constructor(props){
     super(props)
-    this.state = { value: 0 }
+    this.state = {
+      value: 0,
+      open: false,
+    }
   }
 
-  onChange(e, value) {
+  handleChange(e, value) {
     this.setState({ value: value })
   }
 
-  onClick() {
+  handleClick() {
     this.props.updateGrazing(this.state.value)
+    this.handleRequestOpen()
+  }
+
+  handleRequestOpen() {
+    this.setState({open: true})
+  }
+
+  handleRequestClose() {
+    this.setState({open: false})
   }
 
   render() {
@@ -101,14 +114,20 @@ class PastureForm extends Component {
       <p>放牧する牛の数を選択してください。</p>
         <SelectField
           value={this.state.value}
-          onChange={this.onChange.bind(this)}
+          onChange={this.handleChange.bind(this)}
           style={{width: 200}}
         >
           {list}
         </SelectField>
-      <RaisedButton label={"決定"} primary={true} onClick={this.onClick.bind(this)} />
+      <RaisedButton label={"決定"} primary={true} onClick={this.handleClick.bind(this)} />
       <br /><br />
       <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={groups.group.members.length} capacity={capacity} />
+      <Snackbar
+        open={this.state.open}
+        message="送信しました。"
+        autoHideDuration={4000}
+        onRequestClose={this.handleRequestClose.bind(this)}
+      />
    </div>)
   }
 }
