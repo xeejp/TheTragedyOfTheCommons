@@ -56,7 +56,7 @@ class ProfitTable extends Component {
     return (
       <Paper>
         <br />
-        <table>
+        <table className="highlight">
           <caption>利益表</caption>
           <thead>
             <tr>
