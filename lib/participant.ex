@@ -7,6 +7,10 @@ defmodule TheTragedyOfTheCommons.Participant do
     update_in(data, [:participants, id, :id], fn _ -> snum end)
   end
 
+  def update_grazing(data, id, num) do
+    update_in(data, [:participants, id, :grazingNum], fn _ -> num end)
+  end
+
   def get_filter(data, id) do
     %{
       _default: true,
@@ -14,6 +18,7 @@ defmodule TheTragedyOfTheCommons.Participant do
         id => true
       },
       participants_number: "participantsNumber",
+      group_size: "groupSize",
       _spread: [[:participants, id]]
     }
   end

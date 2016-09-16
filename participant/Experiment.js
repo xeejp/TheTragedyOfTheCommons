@@ -5,6 +5,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import InputSnum from './InputSnum'
+import PastureForm from './PastureForm'
 
 const mapStateToProps = ({ participantsNumber, id }) => ({
   participantsNumber,
@@ -25,7 +26,7 @@ class Experiment extends Component {
         <CardText>
           {(id == null)
             ? <InputSnum />
-            : <div></div>
+            : <PastureForm />
           }
         </CardText>
       </Card>

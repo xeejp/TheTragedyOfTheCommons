@@ -11,13 +11,16 @@ defmodule TheTragedyOfTheCommons.Main do
            %{id: 0, text: "A"},
            %{id: 1, text: "B"},
          ],
-       },
+      },
       groups: %{},
       participants: %{},
       participants_number: 0,
       active_participants_number: 0,
       group_size: 4, # Number of members
       groups_number: 0,
+      maxGrazingNum: 3,
+      cost: 2,
+      capacity: 16,
     }
   end
 

@@ -40,6 +40,7 @@ defmodule TheTragedyOfTheCommons do
       {"fetch contents", _} -> Actions.update_participant_contents(data, id)
       {"finish description", _} -> Participant.finish_description(data, id)
       {"update snum", snum} -> Participant.update_snum(data, id, snum)
+      {"update grazing", num} -> Participant.update_grazing(data, id, num)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)
