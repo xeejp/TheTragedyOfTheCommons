@@ -6,13 +6,14 @@ import Paper from 'material-ui/Paper'
 import SelectField from 'material-ui/SelectField'
 import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton'
 
 import { updateGrazing } from './actions'
 
 const actionCreators = {
   updateGrazing,
-
 }
+
 const mapStateToProps = ({ cost, maxGrazingNum, groups, capacity }) => ({
   cost,
   maxGrazingNum,
@@ -89,11 +90,6 @@ class PastureForm extends Component {
     this.setState({ value: value })
   }
 
-  handleClick() {
-    this.props.updateGrazing(this.state.value)
-    this.handleRequestOpen()
-  }
-
   handleRequestOpen() {
     this.setState({open: true})
   }
@@ -105,21 +101,15 @@ class PastureForm extends Component {
   render() {
     let list = []
     const { cost, maxGrazingNum, groups, capacity } = this.props
-    list.push(<MenuItem disabled={true} key={0} value={0} primaryText={"選択してください"} />)
     for (let i = 1; i <= maxGrazingNum; ++i) {
-      list.push(<MenuItem key={i} value={i} primaryText={i + "頭"} />)
+      list.push(<RaisedButton key={i} label={i + "頭"} onClick={(() => {
+        this.props.updateGrazing(i)
+        this.handleRequestOpen()
+      })} />)
     }
-
     return (<div>
       <p>放牧する牛の数を選択してください。</p>
-        <SelectField
-          value={this.state.value}
-          onChange={this.handleChange.bind(this)}
-          style={{width: 200}}
-        >
-          {list}
-        </SelectField>
-      <RaisedButton label={"決定"} primary={true} onClick={this.handleClick.bind(this)} />
+      {list}
       <br /><br />
       <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={groups.group.members.length} capacity={capacity} />
       <Snackbar
