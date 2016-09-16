@@ -18,7 +18,11 @@ defmodule TheTragedyOfTheCommons.Participant do
         id => true
       },
       participants_number: "participantsNumber",
+      groups_number: false,
       group_size: "groupSize",
+      groups: %{
+        data.participants[id].group => "group"
+      },
       _spread: [[:participants, id]]
     }
   end

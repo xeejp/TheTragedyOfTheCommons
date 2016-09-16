@@ -12,10 +12,10 @@ const actionCreators = {
   updateGrazing,
 
 }
-const mapStateToProps = ({ cost, maxGrazingNum, groupSize, capacity }) => ({
+const mapStateToProps = ({ cost, maxGrazingNum, groups, capacity }) => ({
   cost,
   maxGrazingNum,
-  groupSize,
+  groups,
   capacity,
 })
 
@@ -91,7 +91,7 @@ class PastureForm extends Component {
 
   render() {
     let list = []
-    const { cost, maxGrazingNum, groupSize, capacity } = this.props
+    const { cost, maxGrazingNum, groups, capacity } = this.props
     list.push(<MenuItem disabled={true} key={0} value={0} primaryText={"選択してください"} />)
     for (let i = 1; i <= maxGrazingNum; ++i) {
       list.push(<MenuItem key={i} value={i} primaryText={i + "頭"} />)
@@ -108,7 +108,7 @@ class PastureForm extends Component {
         </SelectField>
       <RaisedButton label={"決定"} primary={true} onClick={this.onClick.bind(this)} />
       <br /><br />
-      <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={groupSize} capacity={capacity} />
+      <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={groups.group.members.length} capacity={capacity} />
    </div>)
   }
 }
