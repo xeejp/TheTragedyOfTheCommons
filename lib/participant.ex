@@ -18,6 +18,7 @@ defmodule TheTragedyOfTheCommons.Participant do
         id => true
       },
       participants_number: "participantsNumber",
+      max_grazing_num: "maxGrazingNum",
       groups_number: false,
       group_size: "groupSize",
       groups: %{

@@ -27,6 +27,7 @@ defmodule TheTragedyOfTheCommons do
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_host_contents(data)
       {"change page", page} -> Host.change_page(data, page)
+      {"update config", config} -> Host.update_config(data, config)
       {"match", _} -> Host.match(data)
       _ -> {:ok, %{data: data}}
     end

@@ -18,9 +18,10 @@ defmodule TheTragedyOfTheCommons.Main do
       active_participants_number: 0,
       group_size: 4, # Number of members
       groups_number: 0,
-      maxGrazingNum: 3,
+      max_grazing_num: 3,
       cost: 2,
       capacity: 16,
+      max_round: 4,
     }
   end
 

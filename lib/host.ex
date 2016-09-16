@@ -1,6 +1,17 @@
 defmodule TheTragedyOfTheCommons.Host do
   alias TheTragedyOfTheCommons.Main
 
+  defp ensure_integer(integer) when is_integer(integer), do: integer
+  defp ensure_integer(str), do: Integer.parse(str) |> elem(0)
+
+  def update_config(data, config) do
+    data = Map.put(data, :capacity, ensure_integer(config["capacity"]))
+            |> Map.put(:cost, ensure_integer(config["cost"]))
+            |> Map.put(:group_size, ensure_integer(config["groupSize"]))
+            |> Map.put(:max_grazing_num, ensure_integer(config["maxGrazingNum"]))
+            |> Map.put(:max_round, ensure_integer(config["maxRound"]))
+  end
+
   def change_page(data, page) do
     data = Map.update!(data, :page, fn _ -> page end)
     case page do
@@ -46,6 +57,9 @@ defmodule TheTragedyOfTheCommons.Host do
       participants_number: "participantsNumber",
       active_participants_number: "activeParticipantsNumber",
       groups_number: "groupsNumber",
+      group_size: "groupSize",
+      max_round: "maxRound",
+      max_grazing_num: "maxGrazingNum",
     }
   end
 

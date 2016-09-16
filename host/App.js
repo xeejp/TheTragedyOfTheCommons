@@ -13,6 +13,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import PageStepper from './PageStepper'
 import Users from './Users'
 import MatchingButton from './MatchingButton'
+import ConfigEditor from './ConfigEditor'
 
 const actionCreators = {
   fetchContents
@@ -42,6 +43,7 @@ class App extends Component {
             }}
           />
           <MatchingButton />
+          <ConfigEditor />
           <Divider
             style={{
               marginTop: '5%',
