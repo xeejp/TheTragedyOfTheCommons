@@ -11,8 +11,8 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 const actionCreators = {
   finishDescription
 }
-const mapStateToProps = ({ message }) => ({
-  message
+const mapStateToProps = ({ description }) => ({
+  description
 })
 
 class Description extends Component {
@@ -42,8 +42,8 @@ class Description extends Component {
   }
 
   render() {
-    const { message } = this.props
-    if (this.state.slideIndex == this.props.message.description.length) {
+    const { description } = this.props
+    if (this.state.slideIndex == description.length) {
       this.props.finishDescription()
     }
     return (
@@ -54,14 +54,14 @@ class Description extends Component {
             onChangeIndex={this.handleSlideIndex.bind(this)}
           >
             {
-              message.description.map((description, index) => (
+              description.map((desc, index) => (
                 <div key={index}>
                   <CardHeader
                     title="説明"
-                    subtitle={(index+1) + "/" + (message.description.length+1)}
+                    subtitle={(index+1) + "/" + (description.length + 1)}
                   />
                   <CardText expandable={false}>
-                    {description.text.split('\n').map( line => <p key={line}>{line}</p>)}
+                    {desc.text.split('\n').map( line => <p key={line}>{line}</p>)}
                   </CardText>
                 </div>
               ))
@@ -69,10 +69,10 @@ class Description extends Component {
             <div>
               <CardHeader
                 title="説明"
-                subtitle={(message.description.length+1)+"/"+(message.description.length+1)}
+                subtitle={(description.length + 1) + " / " + (description.length + 1)}
               />
               <CardText expandable={false}>
-                <p>実験が開始されるまでお待ちください</p>
+                <p>実験が開始されるまで、しばらくお待ちください。</p>
                 <div style={{textAlign: "center"}}>
                   <CircularProgress />
                 </div>
@@ -91,7 +91,7 @@ class Description extends Component {
           style={{float: "right"}}
           onTouchTap={this.handleNext.bind(this)}
           primary={true}
-          disabled={this.state.slideIndex == message.description.length}
+          disabled={this.state.slideIndex == description.length}
         />
       </div>
     )

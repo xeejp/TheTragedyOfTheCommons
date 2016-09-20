@@ -12,6 +12,10 @@ defmodule TheTragedyOfTheCommons.Host do
             |> Map.put(:max_round, ensure_integer(config["maxRound"]))
   end
 
+  def update_description(data, description) do
+    data = Map.put(data, :description, description)
+  end
+
   def change_page(data, page) do
     data = Map.update!(data, :page, fn _ -> page end)
     case page do
@@ -58,6 +62,7 @@ defmodule TheTragedyOfTheCommons.Host do
       _default: true,
       participants_number: "participantsNumber",
       active_participants_number: "activeParticipantsNumber",
+      finish_description_number: "finishDescriptionNumber",
       groups_number: "groupsNumber",
       group_size: "groupSize",
       max_round: "maxRound",

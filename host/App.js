@@ -14,6 +14,7 @@ import PageStepper from './PageStepper'
 import Users from './Users'
 import MatchingButton from './MatchingButton'
 import ConfigEditor from './ConfigEditor'
+import DescriptionEditor from './DescriptionEditor'
 
 const actionCreators = {
   fetchContents
@@ -44,6 +45,7 @@ class App extends Component {
           />
           <MatchingButton />
           <ConfigEditor />
+          <DescriptionEditor />
           <Divider
             style={{
               marginTop: '5%',

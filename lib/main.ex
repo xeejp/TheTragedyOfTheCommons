@@ -6,16 +6,18 @@ defmodule TheTragedyOfTheCommons.Main do
     %{
       page: "waiting",
       joinable: true,
-      message: %{
-         description: [
-           %{id: 0, text: "A"},
-           %{id: 1, text: "B"},
-         ],
-      },
+      description: [
+        %{id: 0, text: "数件の農家が山の中に共同で土地を持っているとします。"},
+        %{id: 1, text: "その共有地には牧草がよく茂っていて、そこには、自由に放牧することが出来ます。"},
+        %{id: 2, text: "いま、4件の農家が放牧を希望しているとし、各農家は3頭までの仔牛を買うことが出来ます。"},
+        %{id: 3, text: "たくさんの牛が放牧されると、それだけ牛の生育が悪くなり、牛からの収益が落ちます。"},
+        %{id: 4, text: "あなたは、農家の1人として、何頭の牛を放牧するかを選択してください。"},
+      ],
       groups: %{},
       participants: %{},
       participants_number: 0,
       active_participants_number: 0,
+      finish_description_number: 0,
       group_size: 4, # Number of members
       groups_number: 0,
       max_grazing_num: 3,
