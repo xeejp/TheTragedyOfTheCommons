@@ -12,15 +12,17 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import Experiment from './Experiment'
 import Waiting from './Waiting'
 import Description from './Description'
+import Result from './Result'
 
 const actionCreators = {
   fetchContents
 }
 
-const mapStateToProps = ({ page, joinable, group }) => ({
+const mapStateToProps = ({ page, joinable, group, groupStatus }) => ({
   page,
   joinable,
   group,
+  groupStatus,
 })
 
 class App extends Component {
@@ -34,8 +36,7 @@ class App extends Component {
   }
 
   render() {
-    const { page, joinable, group } = this.props
-    console.log(this.props)
+    const { page, joinable, group, groupStatus } = this.props
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
@@ -43,7 +44,13 @@ class App extends Component {
           ? <div>
               { (page == "waiting") ? <Waiting /> : null }
               { (page == "description") ? <Description /> : null }
-              { (page == "experiment") ? <Experiment /> : null }
+              { (page == "experiment")
+                  ? (groupStatus == "playing")
+                      ? <Experiment />
+                      : (groupStatus == "result") ? <Result /> : null
+                  : null
+              }
+              { (page == "result") ? <Result /> : null }
           </div>
           : <Card>
               <CardTitle title="共有地の悲劇" subtitle="実験中"/>

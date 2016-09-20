@@ -40,7 +40,8 @@ defmodule TheTragedyOfTheCommons.Main do
   def new_group(members) do
     %{
       members: members,
-      state: "waiting",
+      group_status: "playing",
+      group_profits: [],
       round: 0,
     }
   end

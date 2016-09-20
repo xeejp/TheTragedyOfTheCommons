@@ -62,6 +62,13 @@ defmodule TheTragedyOfTheCommons.Host do
       group_size: "groupSize",
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
+      groups: %{
+        _default: %{
+          _default: true,
+          group_status: "groupStatus",
+          group_profits: "groupProfits",
+        }
+      }
     }
   end
 

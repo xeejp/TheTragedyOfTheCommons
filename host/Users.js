@@ -41,13 +41,13 @@ const UsersList = ({page, participants, openParticipantPage}) => (
   </table>
 )
 
-const Group = ({ id, round, state, members }) => (
-  <tr><td>{id}</td><td>{round}</td><td>{state}</td><td>{members}</td></tr>
+const Group = ({ id, round, status, members }) => (
+  <tr><td>{id}</td><td>{round}</td><td>{status}</td><td>{members}</td></tr>
 )
 
 const Groups = ({ maxRound, groups, participants }) => (
   <table className="highlight">
-    <thead><tr><th>ID</th><th>Round</th><th>State</th><th>Members</th></tr></thead>
+    <thead><tr><th>ID</th><th>Round</th><th>Status</th><th>Members</th></tr></thead>
     <tbody>
       {
         Object.keys(groups).map(id => (
@@ -55,7 +55,7 @@ const Groups = ({ maxRound, groups, participants }) => (
             key={id}
             id={id}
             round={groups[id].round + 1 + " / " + maxRound}
-            state={groups[id].state}
+            status={groups[id].groupStatus}
             members={groups[id].members.length}
           />
         ))

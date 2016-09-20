@@ -24,9 +24,12 @@ defmodule TheTragedyOfTheCommons.Participant do
       sum = Enum.reduce(members, 0, fn(p, acc) -> Enum.at(p.grazings, group.round) + acc end)
       data = Enum.reduce(group.members, data, fn i, acc -> put_in(acc, [:participants, i, :profits], List.insert_at(participants[i].profits, -1, (Enum.at(participants[i].grazings, group.round) * (data.capacity - sum - data.cost)))) end)
 
+      data = put_in(data, [:groups, group_id, :group_profits], List.insert_at(group.group_profits, -1, (data.capacity - sum - data.cost) * sum))
       if group.round < data.max_round - 1 do
         data = Enum.reduce(group.members, data, fn i, acc -> put_in(acc, [:participants, i, :answered], false) end)
                 |> update_in([:groups, group_id, :round], fn (x) -> x + 1 end)
+      else
+        data = put_in(data, [:groups, group_id, :group_status], "result")
       end
     end
     data
@@ -44,7 +47,11 @@ defmodule TheTragedyOfTheCommons.Participant do
       groups_number: false,
       group_size: "groupSize",
       groups: %{
-        group_id => true
+        group_id => %{
+          _default: true,
+          group_status: "groupStatus",
+          group_profits: "groupProfits",
+        }
       },
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
