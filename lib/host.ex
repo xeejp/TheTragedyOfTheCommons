@@ -35,7 +35,9 @@ defmodule TheTragedyOfTheCommons.Host do
     updater = fn participant, group ->
       %{ participant |
         group: group,
-        profit: 0,
+        answered: false,
+        profits: [],
+        grazings: [],
       }
     end
     reducer = fn {group, ids}, {participants, groups} ->

@@ -10,18 +10,18 @@ import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline'
 
 import { openParticipantPage } from './actions'
 
-const User = ({ id, profit, grazingNum, openParticipantPage, status, group }) => (
+const User = ({ id, profit, grazing, openParticipantPage, status, group }) => (
   <tr>
     <td><a onClick={openParticipantPage(id)}>{id}</a></td>
     <td>{profit}</td>
-    <td>{grazingNum}</td>
+    <td>{grazing}</td>
     <td>{status}</td>
     <td>{group}</td>
   </tr>
 )
 
-const UsersList = ({participants, openParticipantPage}) => (
-  <table>
+const UsersList = ({page, participants, openParticipantPage}) => (
+  <table className="highlight">
     <thead><tr><th>ID</th><th>Profit</th><th>Grazing</th><th>Status</th><th>Group ID</th></tr></thead>
     <tbody>
       {
@@ -29,10 +29,10 @@ const UsersList = ({participants, openParticipantPage}) => (
           <User
             key={id}
             id={participants[id].id != null ? participants[id].id : "id : " + id}
-            profit={participants[id].profit}
-            grazingNum={participants[id].grazingNum}
+            profit={participants[id].profits.reduce((acc, val) => acc + val, 0)}
+            grazing={participants[id].grazings.join(", ")}
             openParticipantPage={openParticipantPage}
-            status={participants[id].status}
+            status={(page != "experiment") ? page : (participants[id].answered ? "回答済み" : "未回答")}
             group={participants[id].group}
           />
         ))
@@ -41,12 +41,12 @@ const UsersList = ({participants, openParticipantPage}) => (
   </table>
 )
 
-const Group = ({ id, state, members }) => (
-  <tr><td>{id}</td><td>{state}</td><td>{members}</td></tr>
+const Group = ({ id, round, state, members }) => (
+  <tr><td>{id}</td><td>{round}</td><td>{state}</td><td>{members}</td></tr>
 )
 
-const Groups = ({ groups, participants }) => (
-  <table>
+const Groups = ({ maxRound, groups, participants }) => (
+  <table className="highlight">
     <thead><tr><th>ID</th><th>Round</th><th>State</th><th>Members</th></tr></thead>
     <tbody>
       {
@@ -54,6 +54,7 @@ const Groups = ({ groups, participants }) => (
           <Group
             key={id}
             id={id}
+            round={groups[id].round + 1 + " / " + maxRound}
             state={groups[id].state}
             members={groups[id].members.length}
           />
@@ -63,7 +64,9 @@ const Groups = ({ groups, participants }) => (
   </table>
 )
 
-const mapStateToProps = ({ groups, participants, participantsNumber, groupsNumber, activeParticipantsNumber }) => ({
+const mapStateToProps = ({ page, maxRound, groups, participants, participantsNumber, groupsNumber, activeParticipantsNumber }) => ({
+  page,
+  maxRound,
   groups,
   participants,
   participantsNumber,
@@ -85,7 +88,7 @@ class Users extends Component {
   }
 
   render() {
-    const { participants, groups, participantsNumber, groupsNumber, openParticipantPage, activeParticipantsNumber } = this.props
+    const { page, maxRound, participants, groups, participantsNumber, groupsNumber, openParticipantPage, activeParticipantsNumber } = this.props
     return (
       <div>
         <Card>
@@ -96,6 +99,7 @@ class Users extends Component {
           />
           <CardText expandable={true}>
             <UsersList
+              page={page}
               participants={participants}
               openParticipantPage={openParticipantPage}
             />
@@ -109,6 +113,7 @@ class Users extends Component {
           />
           <CardText expandable={true}>
             <Groups
+              maxRound={maxRound}
               groups={groups}
               participants={participants}
             />

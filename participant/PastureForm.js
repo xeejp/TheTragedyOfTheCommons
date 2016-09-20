@@ -11,10 +11,11 @@ const actionCreators = {
   updateGrazing,
 }
 
-const mapStateToProps = ({ cost, maxGrazingNum, groups, capacity }) => ({
+const mapStateToProps = ({ round, cost, maxGrazingNum, members, capacity }) => ({
+  round,
   cost,
   maxGrazingNum,
-  groups,
+  members,
   capacity,
 })
 
@@ -35,8 +36,6 @@ class ProfitTable extends Component {
     const sumOfCattles = (groupSize - 1) * maxGrazingNum
 
     let header = []
-    header.push(<th key={uuid()}></th>) // empty element
-    header.push(<th key={uuid()} style={{borderRight: 'solid 1px silver'}}></th>) // empty element
     for (let i = 0; i <= sumOfCattles; ++i) {
       header.push(<th key={uuid()} style={{textAlign: 'center'}}>{i}</th>)
     }
@@ -60,12 +59,16 @@ class ProfitTable extends Component {
               <th></th>
               <th style={{textAlign: 'center'}} colSpan={sumOfCattles - 2}>自分以外の農家の放牧数の和</th>
             </tr>
-            <tr>{header}</tr>
+            <tr>
+              <th key={uuid()}></th>
+              <th key={uuid()} style={{borderRight: 'solid 1px silver'}}></th>
+              {header}
+            </tr>
           </thead>
           <tbody>
-          <tr>
-            <th style={{textAlign: 'center'}} rowSpan={maxGrazingNum + 1}>自分の放牧数</th>
-          </tr>
+            <tr>
+              <th style={{textAlign: 'center'}} rowSpan={maxGrazingNum + 1}>自分の放牧数</th>
+            </tr>
             {body}
           </tbody>
         </table>
@@ -78,40 +81,46 @@ class PastureForm extends Component {
   constructor(props){
     super(props)
     this.state = {
-      value: 0,
       open: false,
+      value: 0,
     }
+  }
+
+  componentWillReceiveProps(props) {
+    this.setState({
+      open: true,
+      value: 0,
+    })
+  }
+
+  handleRequestClose() {
+    this.setState({ open: false })
   }
 
   handleChange(e, value) {
     this.setState({ value: value })
   }
 
-  handleRequestOpen() {
-    this.setState({open: true})
-  }
-
-  handleRequestClose() {
-    this.setState({open: false})
+  handleClick() {
+    this.props.updateGrazing(this.state.value)
   }
 
   render() {
     let list = []
-    const { cost, maxGrazingNum, groups, capacity } = this.props
+    const { round, cost, maxGrazingNum, members, capacity } = this.props
     for (let i = 1; i <= maxGrazingNum; ++i) {
       list.push(<RaisedButton key={i} label={i + "頭"} onClick={(() => {
         this.props.updateGrazing(i)
-        this.handleRequestOpen()
       })} />)
     }
     return (<div>
       <p>放牧する牛の数を選択してください。</p>
       {list}
       <br /><br />
-      <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={groups.group.members.length} capacity={capacity} />
+      <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={members.length} capacity={capacity} />
       <Snackbar
         open={this.state.open}
-        message="送信しました。"
+        message={"Round " + (round + 1) +  "!"}
         autoHideDuration={4000}
         onRequestClose={this.handleRequestClose.bind(this)}
       />

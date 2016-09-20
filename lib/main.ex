@@ -29,10 +29,11 @@ defmodule TheTragedyOfTheCommons.Main do
     %{
       is_finish_description: false,
       id: nil,
-      profit: 0,
-      grazingNum: 0,
+      profits: [],
+      grazings: [],
       status: "waiting",
       group: nil,
+      answered: false,
     }
   end
 
@@ -40,6 +41,7 @@ defmodule TheTragedyOfTheCommons.Main do
     %{
       members: members,
       state: "waiting",
+      round: 0,
     }
   end
 
