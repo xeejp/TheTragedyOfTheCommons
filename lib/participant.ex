@@ -31,9 +31,10 @@ defmodule TheTragedyOfTheCommons.Participant do
                 |> update_in([:groups, group_id, :round], fn (x) -> x + 1 end)
       else
         # game end
-        results = Enum.reduce(group.members, data.results, fn i, acc -> Map.put(acc, i, participants[i].grazings) end)
+        results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, participants[i].grazings) end)
         data = put_in(data, [:groups, group_id, :group_status], "result")
-                |> Map.put(:results, results)
+                |> put_in([:results, :participants], results)
+        data = put_in(data, [:results, :groups], data.groups)
       end
     end
     data

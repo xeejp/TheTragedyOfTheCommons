@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import Divider from 'material-ui/Divider'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
+
+import Graph from '../shared/Graph'
 
 const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, id, results }) => ({
   profits,
@@ -80,8 +83,9 @@ class Result extends Component {
   }
 
   render() {
-    const { maxRound, groupProfits, profits, grazings, id, results } = this.props
-    delete results[id]
+    const { maxRound, profits, groupProfits, grazings, id, results } = this.props
+    let anotherUsers = JSON.parse(JSON.stringify(results.participants))
+    delete anotherUsers[id]
     return (
       <Card>
         <CardTitle title="共有地の悲劇" subtitle={"実験結果 (学籍番号: " + (id ? id : "") + ")"}/>
@@ -92,8 +96,15 @@ class Result extends Component {
             grazings={grazings}
             profits={profits}
             groupProfits={groupProfits}
-            anotherUsers={results}
+            anotherUsers={anotherUsers}
           />
+          <Divider
+            style={{
+              marginTop: '5%',
+              marginBottom: '5%',
+            }}
+          />
+          <Graph />
         </CardText>
       </Card>
     )
