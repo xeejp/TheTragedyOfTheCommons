@@ -22,6 +22,7 @@ defmodule TheTragedyOfTheCommons.Main do
       cost: 2,
       capacity: 16,
       max_round: 4,
+      results: %{},
     }
   end
 

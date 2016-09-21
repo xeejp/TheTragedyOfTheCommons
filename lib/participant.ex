@@ -26,10 +26,14 @@ defmodule TheTragedyOfTheCommons.Participant do
 
       data = put_in(data, [:groups, group_id, :group_profits], List.insert_at(group.group_profits, -1, (data.capacity - sum - data.cost) * sum))
       if group.round < data.max_round - 1 do
+        # round end
         data = Enum.reduce(group.members, data, fn i, acc -> put_in(acc, [:participants, i, :answered], false) end)
                 |> update_in([:groups, group_id, :round], fn (x) -> x + 1 end)
       else
+        # game end
+        results = Enum.reduce(group.members, data.results, fn i, acc -> Map.put(acc, i, participants[i].grazings) end)
         data = put_in(data, [:groups, group_id, :group_status], "result")
+                |> Map.put(:results, results)
       end
     end
     data
@@ -37,6 +41,8 @@ defmodule TheTragedyOfTheCommons.Participant do
 
   def get_filter(data, id) do
     group_id = data.participants[id].group
+    status = if group_id, do: get_in(data, [:groups, group_id, :group_status]), else: nil
+    if (data.page == "result"), do: status = "result"
     %{
       _default: true,
       participants: %{
@@ -55,6 +61,7 @@ defmodule TheTragedyOfTheCommons.Participant do
       },
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
+      results: status == "result",
       _spread: [[:participants, id], [:groups, group_id]]
     }
   end
