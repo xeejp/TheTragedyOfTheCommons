@@ -103,7 +103,7 @@ class PastureForm extends Component {
     let list = []
     const { round, cost, maxGrazingNum, members, capacity } = this.props
     for (let i = 1; i <= maxGrazingNum; ++i) {
-      list.push(<RaisedButton key={i} label={i + "頭"} onClick={(() => {
+      list.push(<RaisedButton key={i} label={i + "頭"} style={{marginLeft: '1px'}} onClick={(() => {
         this.props.updateGrazing(i)
       })} />)
     }
