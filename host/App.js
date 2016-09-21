@@ -13,7 +13,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import PageStepper from './PageStepper'
 import Users from './Users'
 import DownloadButton from './DownloadButton'
-import MatchingButton from './MatchingButton'
+import ResetButton from './ResetButton'
 import ConfigEditor from './ConfigEditor'
 
 const actionCreators = {
@@ -43,7 +43,7 @@ class App extends Component {
               marginBottom: '5%',
             }}
           />
-          <MatchingButton />
+          <ResetButton />
           <DownloadButton />
           <ConfigEditor />
           <Divider

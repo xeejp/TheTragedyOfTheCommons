@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FileDownloadIcon from 'material-ui/svg-icons/file/file-download'
+import Snackbar from 'material-ui/Snackbar'
 
 const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber }) => ({
   page,
@@ -19,6 +20,7 @@ const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum
 class DownloadButton extends Component {
   constructor(props, context) {
     super(props, context)
+    this.state = { open: false }
   }
 
   handleClick() {
@@ -54,17 +56,31 @@ class DownloadButton extends Component {
     a.download = fileName
     a.href = blobURL
     a.click()
+    this.setState({open: true})
+  }
+
+  handleRequestClose() {
+    this.setState({ open: false })
   }
 
   render() {
     const { page } = this.props
     return (
-      <FloatingActionButton
-        onClick={this.handleClick.bind(this)}
-        disabled={page != "result"}
-      >
-        <FileDownloadIcon />
-      </FloatingActionButton>
+      <span>
+        <FloatingActionButton
+          onClick={this.handleClick.bind(this)}
+          disabled={page != "result"}
+          style={{marginLeft: '5%'}}
+        >
+          <FileDownloadIcon />
+        </FloatingActionButton>
+        <Snackbar
+          open={this.state.open}
+          message={'実験結果をCSV形式で保存しました。'}
+          autoHideDuration={2000}
+          onRequestClose={this.handleRequestClose.bind(this)}
+        />
+      </span>
     )
   }
 }
