@@ -15,11 +15,13 @@ import Users from './Users'
 import DownloadButton from './DownloadButton'
 import MatchingButton from './MatchingButton'
 import ConfigEditor from './ConfigEditor'
+import Graph from '../shared/Graph'
 
 const actionCreators = {
   fetchContents
 }
-const mapStateToProps = ({ }) => ({
+const mapStateToProps = ({ page }) => ({
+  page
 })
 
 class App extends Component {
@@ -33,6 +35,7 @@ class App extends Component {
   }
 
   render() {
+    const { page } = this.props
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
@@ -53,6 +56,13 @@ class App extends Component {
             }}
           />
           <Users />
+          <Divider
+            style={{
+              marginTop: '5%',
+              marginBottom: '5%',
+            }}
+          />
+          {(page == "result") ? <Graph /> : null}
         </div>
       </MuiThemeProvider>
     )

@@ -50,7 +50,8 @@ defmodule TheTragedyOfTheCommons.Host do
     acc = {participants, %{}}
     {participants, groups} = Enum.reduce(groups, acc, reducer)
 
-    %{data | participants: participants, groups: groups, groups_number: groups_number, active_participants_number: data.participants_number, joinable: false}
+    %{data | participants: participants, groups: groups, groups_number: groups_number, active_participants_number: data.participants_number, joinable: false, results: %{participants: %{}, groups: %{}}
+  }
   end
 
   def get_filter(data) do
