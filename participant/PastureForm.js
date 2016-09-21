@@ -82,23 +82,17 @@ class PastureForm extends Component {
     super(props)
     this.state = {
       open: false,
-      value: 0,
     }
   }
 
   componentWillReceiveProps(props) {
     this.setState({
       open: true,
-      value: 0,
     })
   }
 
   handleRequestClose() {
     this.setState({ open: false })
-  }
-
-  handleChange(e, value) {
-    this.setState({ value: value })
   }
 
   handleClick() {
