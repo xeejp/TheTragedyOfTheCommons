@@ -32,7 +32,7 @@ class ProfitTable extends Component {
       return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4())
     })
 
-    const { cost, maxGrazingNum, groupSize, capacity } = this.props
+    const { value, cost, maxGrazingNum, groupSize, capacity } = this.props
     const sumOfCattles = (groupSize - 1) * maxGrazingNum
 
     let header = []
@@ -46,7 +46,7 @@ class ProfitTable extends Component {
       for (let j = 0; j <= sumOfCattles; j++) {
         line.push(<td key={uuid()} style={{textAlign: 'center'}}>{i * (capacity - (i + j)) - cost * i}</td>)
       }
-      body.push(<tr key={uuid()}>{line}</tr>)
+      body.push(<tr key={uuid()} style={(value == i) ? {backgroundColor: '#f2f2f2'} : null}>{line}</tr>)
     }
 
     return (
@@ -82,6 +82,7 @@ class PastureForm extends Component {
     super(props)
     this.state = {
       open: false,
+      value: 0,
     }
   }
 
@@ -99,19 +100,27 @@ class PastureForm extends Component {
     this.props.updateGrazing(this.state.value)
   }
 
+  handleFocus(value) {
+    this.setState({value: value})
+  }
+
+  handleBlur() {
+    this.setState({value: 0})
+  }
+
   render() {
     let list = []
     const { round, cost, maxGrazingNum, members, capacity } = this.props
     for (let i = 1; i <= maxGrazingNum; ++i) {
-      list.push(<RaisedButton key={i} label={i + "頭"} style={{marginLeft: '1px'}} onClick={(() => {
+      list.push(<RaisedButton key={i} label={i + "頭"} style={{marginLeft: '1px'}} onMouseLeave={this.handleBlur.bind(this)} onMouseEnter={this.handleFocus.bind(this, i)} onFocus={this.handleFocus.bind(this, i)} onClick={(() => {
         this.props.updateGrazing(i)
-      })} />)
+      })}/>)
     }
     return (<div>
       <p>放牧する牛の数を選択してください。</p>
       {list}
       <br /><br />
-      <ProfitTable cost={cost} maxGrazingNum={maxGrazingNum} groupSize={members.length} capacity={capacity} />
+      <ProfitTable value={this.state.value} cost={cost} maxGrazingNum={maxGrazingNum} groupSize={members.length} capacity={capacity} />
       <Snackbar
         open={this.state.open}
         message={"Round " + (round + 1) +  "!"}
