@@ -64,20 +64,20 @@ class DescriptionEditor extends Component {
   }
 
   deleteDescription(index) {
-    let description = this.state.description
+    let description = Object.assign([], this.state.description)
     description.splice(index, 1)
     this.setState({description: description})
   }
 
   addDescription() {
-    let description = this.state.description
-    let id = description.reduce((prev, curr) => Math.max(prev, curr.id), 0) + 1
-    description.push({id: id, text: ""})
+    let description = Object.assign([], this.state.description)
+    let maxId = description.reduce((prev, curr) => Math.max(prev, curr.id), 0)
+    description.push({id: maxId + 1, text: ""})
     this.setState({description: description})
   }
 
   handleChange(index, event, value) {
-    let description = this.state.description
+    let description = Object.assign([], this.state.description)
     description[index] = {id: index, text: value}
     this.setState({description: description})
   }
