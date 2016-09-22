@@ -26,6 +26,10 @@ defmodule TheTragedyOfTheCommons do
     Logger.debug("[TheTragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_host_contents(data)
+      {"change page", page} -> Host.change_page(data, page)
+      {"update config", config} -> Host.update_config(data, config)
+      {"update description", description} -> Host.update_description(data, description)
+      {"match", _} -> Host.match(data)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)
@@ -37,6 +41,8 @@ defmodule TheTragedyOfTheCommons do
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_participant_contents(data, id)
       {"finish description", _} -> Participant.finish_description(data, id)
+      {"update snum", snum} -> Participant.update_snum(data, id, snum)
+      {"update grazing", num} -> Participant.update_grazing(data, id, num)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)

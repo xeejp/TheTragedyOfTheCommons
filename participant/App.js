@@ -9,15 +9,20 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
+import Experiment from './Experiment'
 import Waiting from './Waiting'
 import Description from './Description'
+import Result from './Result'
 
 const actionCreators = {
   fetchContents
 }
 
-const mapStateToProps = ({ page }) => ({
+const mapStateToProps = ({ page, joinable, group, groupStatus }) => ({
   page,
+  joinable,
+  group,
+  groupStatus,
 })
 
 class App extends Component {
@@ -31,12 +36,30 @@ class App extends Component {
   }
 
   render() {
-    const { page } = this.props
+    const { page, joinable, group, groupStatus } = this.props
     return (
       <MuiThemeProvider muiTheme={getMuiTheme(lightBaseTheme)}>
         <div>
-        { (page == "waiting") ? <Waiting /> : null }
-        { (page == "description") ? <Description /> : null }
+        { joinable || group != null
+          ? <div>
+              { (page == "waiting") ? <Waiting /> : null }
+              { (page == "description") ? <Description /> : null }
+              { (page == "experiment")
+                  ? (groupStatus == "playing")
+                      ? <Experiment />
+                      : (groupStatus == "result") ? <Result /> : null
+                  : null
+              }
+              { (page == "result") ? <Result /> : null }
+          </div>
+          : <Card>
+              <CardTitle title="共有地の悲劇" subtitle="実験中"/>
+              <CardText>
+                <p>実験はすでに開始されています。</p>
+                <p>実験が終了するまでお待ちください。</p>
+              </CardText>
+          </Card>
+        }
         </div>
       </MuiThemeProvider>
     )
