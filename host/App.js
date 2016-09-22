@@ -46,6 +46,14 @@ class App extends Component {
               marginBottom: '5%',
             }}
           />
+          <Users />
+          <Divider
+            style={{
+              marginTop: '5%',
+              marginBottom: '5%',
+            }}
+          />
+          {(page == "result") ? <Graph /> : null}
           <ResetButton />
           <DownloadButton />
           <ConfigEditor />
@@ -55,14 +63,6 @@ class App extends Component {
               marginBottom: '5%',
             }}
           />
-          <Users />
-          <Divider
-            style={{
-              marginTop: '5%',
-              marginBottom: '5%',
-            }}
-          />
-          {(page == "result") ? <Graph /> : null}
         </div>
       </MuiThemeProvider>
     )
