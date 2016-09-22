@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FileDownloadIcon from 'material-ui/svg-icons/file/file-download'
 import Snackbar from 'material-ui/Snackbar'
 
-const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber }) => ({
+const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId }) => ({
   page,
   participants,
   participantsNumber,
@@ -15,6 +15,7 @@ const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum
   cost,
   groupSize,
   groupsNumber,
+  askStudentId,
 })
 
 class DownloadButton extends Component {
@@ -24,12 +25,12 @@ class DownloadButton extends Component {
   }
 
   handleClick() {
-    const { participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber } = this.props
+    const { participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId } = this.props
     const fileName = 'TheTragedyOfTheCommons.csv'
 
     let users = Object.keys(participants).map(id => {
       let user = participants[id]
-      return (id + ',' + user.id + ',' + user.grazings.join(',') + ',' + user.profits.join(',') + ',' + user.profits.reduce((prev, curr) => prev + curr, 0) + ',' + user.group)
+      return (id + ',' + (askStudentId ? (user.id + ',') : '') + user.grazings.join(',') + ',' + user.profits.join(',') + ',' + user.profits.reduce((prev, curr) => prev + curr, 0) + ',' + user.group)
     })
 
     let colGrazing = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + '放牧:' + (i + 1) + '回目,'), '')
@@ -45,7 +46,7 @@ class DownloadButton extends Component {
       + '最大放牧可能数,' + maxGrazingNum + '\n'
       + '牛の価格,' + cost + '\n'
       + '牧草の量,' + capacity + '\n'
-      + 'ID,学籍番号,' + colGrazing + colProfit + '合計利益,グループID\n'
+      + 'ID,' + (askStudentId ? '学籍番号,' : '') + colGrazing + colProfit + '合計利益,グループID\n'
       + users.join('\n') + '\n'
 
     let blob = new Blob([content])

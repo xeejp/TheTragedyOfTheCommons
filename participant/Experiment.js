@@ -8,13 +8,14 @@ import CircularProgress from 'material-ui/CircularProgress'
 import InputSnum from './InputSnum'
 import PastureForm from './PastureForm'
 
-const mapStateToProps = ({ profits, maxRound, round, participantsNumber, id, answered }) => ({
+const mapStateToProps = ({ profits, maxRound, round, participantsNumber, id, answered, askStudentId }) => ({
   profits,
   maxRound,
   round,
   participantsNumber,
   id,
   answered,
+  askStudentId,
 })
 
 class Experiment extends Component {
@@ -24,12 +25,12 @@ class Experiment extends Component {
   }
 
   render() {
-    const { maxRound, round, participantsNumber, id, answered, profits } = this.props
+    const { maxRound, round, participantsNumber, id, answered, profits, askStudentId } = this.props
     return (
       <Card>
-        <CardTitle title="共有地の悲劇" subtitle={"実験中 (学籍番号: " + (id ? id : "") + ")"}/>
+        <CardTitle title="共有地の悲劇" subtitle={"実験中" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>
         <CardText>
-          {(id == null)
+          {(askStudentId && id == null)
             ? <InputSnum />
               : <div>
                 <Chip style={{float: "left"}}>Current Round : {round + 1 + " / " + maxRound}</Chip>

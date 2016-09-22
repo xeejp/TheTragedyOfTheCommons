@@ -10,6 +10,7 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import {Card} from 'material-ui/Card'
 import SwipeableViews from 'react-swipeable-views'
 import Snackbar from 'material-ui/Snackbar'
+import Toggle from 'material-ui/Toggle'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
 
 import { updateConfig } from './actions'
@@ -18,13 +19,14 @@ const actionCreators = {
   updateConfig,
 }
 
-const mapStateToProps = ({ page, maxRound, cost, maxGrazingNum, capacity, groupSize }) => ({
+const mapStateToProps = ({ page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId }) => ({
   page,
   maxRound,
   cost,
   maxGrazingNum,
   capacity,
-  groupSize
+  groupSize,
+  askStudentId,
 })
 
 class ConfigEditor extends Component {
@@ -42,23 +44,26 @@ class ConfigEditor extends Component {
         maxGrazingNum: 3,
         groupSize: 4,
         capacity: 16,
+        askStudentId: false,
       },
       cost: 2,
       capacity: 16,
       maxRound: 4,
       maxGrazingNum: 3,
       groupSize: 4,
+      askStudentId: false,
     }
   }
 
   componentDidReceiveProps() {
-    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize } = this.props
+    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId } = this.props
     this.setState({
       cost: cost,
       capacity: capacity,
       maxRound: maxRound,
       maxGrazingNum: maxGrazingNum,
       groupSize: groupSize,
+      askStudentId: askStudentId,
     })
   }
 
@@ -114,6 +119,10 @@ class ConfigEditor extends Component {
     this.setState({ cost: value })
   }
 
+  handleChangeAskStudentId(e, value) {
+    this.setState({ askStudentId: value })
+  }
+
   isValidNumber(value) {
     if (isNaN(value) || value.indexOf('.') != -1 || parseInt(value) <= 0 || 100000 < parseInt(value)) {
       this.setState({ disabled: true })
@@ -135,6 +144,7 @@ class ConfigEditor extends Component {
       capacity: this.state.capacity,
       maxGrazingNum: this.state.maxGrazingNum,
       cost: this.state.cost,
+      askStudentId: this.state.askStudentId
     }
     this.props.updateConfig(config)
   }
@@ -149,7 +159,7 @@ class ConfigEditor extends Component {
   }
 
   render() {
-    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize } = this.props
+    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId } = this.props
     const actions = [
       <RaisedButton
         label="適用"
@@ -183,6 +193,13 @@ class ConfigEditor extends Component {
           open={this.state.isOpenDialog}
           autoScrollBodyContent={true}
         >
+          <p>学籍番号入力</p>
+          <Toggle
+            label={"学籍番号入力" + (this.state.askStudentId ? "を行う" : "行わない")}
+            toggled={this.state.askStudentId}
+            onToggle={this.handleChangeAskStudentId.bind(this)}
+          />
+
           <p>ラウンド数</p>
           <TextField
             hintText={"ラウンド数(正の整数)"}

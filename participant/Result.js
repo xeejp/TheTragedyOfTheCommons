@@ -6,13 +6,14 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import Graph from '../shared/Graph'
 
-const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, id, results }) => ({
+const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, id, results, askStudentId }) => ({
   profits,
   maxRound,
   groupProfits,
   grazings,
   id,
   results,
+  askStudentId,
 })
 
 const Round = ({ index, grazing, profit, groupProfit, style, anotherUsersGrazings }) => (
@@ -83,12 +84,12 @@ class Result extends Component {
   }
 
   render() {
-    const { maxRound, profits, groupProfits, grazings, id, results } = this.props
+    const { maxRound, profits, groupProfits, grazings, id, results, askStudentId } = this.props
     let anotherUsers = JSON.parse(JSON.stringify(results.participants))
     delete anotherUsers[id]
     return (
       <Card>
-        <CardTitle title="共有地の悲劇" subtitle={"実験結果 (学籍番号: " + (id ? id : "") + ")"}/>
+        <CardTitle title="共有地の悲劇" subtitle={"実験結果" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>
         <CardText>
           <p>以上で実験は終了になります。お疲れ様でした。</p>
           <ResultTable

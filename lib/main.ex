@@ -24,6 +24,7 @@ defmodule TheTragedyOfTheCommons.Main do
       cost: 2,
       capacity: 16,
       max_round: 4,
+      ask_student_id: false,
       results: %{
         groups: %{},
         participants: %{},
