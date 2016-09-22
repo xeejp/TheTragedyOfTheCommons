@@ -15,6 +15,7 @@ import Users from './Users'
 import DownloadButton from './DownloadButton'
 import ResetButton from './ResetButton'
 import ConfigEditor from './ConfigEditor'
+import DescriptionEditor from './DescriptionEditor'
 import Graph from '../shared/Graph'
 
 const actionCreators = {
@@ -57,6 +58,7 @@ class App extends Component {
           <ResetButton />
           <DownloadButton />
           <ConfigEditor />
+          <DescriptionEditor />
           <Divider
             style={{
               marginTop: '5%',
