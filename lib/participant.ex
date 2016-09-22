@@ -63,6 +63,7 @@ defmodule TheTragedyOfTheCommons.Participant do
       },
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
+      ask_student_id: "askStudentId",
       results: status == "result",
       _spread: [[:participants, id], [:groups, group_id]]
     }

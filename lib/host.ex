@@ -10,6 +10,7 @@ defmodule TheTragedyOfTheCommons.Host do
             |> Map.put(:group_size, ensure_integer(config["groupSize"]))
             |> Map.put(:max_grazing_num, ensure_integer(config["maxGrazingNum"]))
             |> Map.put(:max_round, ensure_integer(config["maxRound"]))
+            |> Map.put(:ask_student_id, config["askStudentId"])
   end
 
   def update_description(data, description) do
@@ -68,6 +69,7 @@ defmodule TheTragedyOfTheCommons.Host do
       group_size: "groupSize",
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
+      ask_student_id: "askStudentId",
       groups: %{
         _default: %{
           _default: true,
