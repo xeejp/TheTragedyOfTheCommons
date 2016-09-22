@@ -18,6 +18,7 @@ class Graph extends Component {
 
   render() {
     const { results, maxRound, maxGrazingNum, groupSize } = this.props
+    if (!results) return null
     let config = {
       chart: {
         type: 'scatter',

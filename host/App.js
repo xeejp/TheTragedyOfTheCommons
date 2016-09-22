@@ -56,9 +56,9 @@ class App extends Component {
           />
           {(page == "result") ? <Graph /> : null}
           <ResetButton />
-          <DownloadButton />
           <ConfigEditor />
           <DescriptionEditor />
+          <DownloadButton />
           <Divider
             style={{
               marginTop: '5%',
