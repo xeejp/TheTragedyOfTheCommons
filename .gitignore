@@ -16,6 +16,12 @@ erl_crash.dump
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
+<<<<<<< HEAD
 /participant.js
 /host.js
 node_modules
+=======
+node_modules
+participant.js
+host.js
+>>>>>>> e3bd7c9bb91d1001a64fe9f35d7278270ca58415
