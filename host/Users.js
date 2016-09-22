@@ -10,9 +10,9 @@ import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline'
 
 import { openParticipantPage } from './actions'
 
-const User = ({ id, profit, grazing, openParticipantPage, status, group }) => (
+const User = ({ id, userid, profit, grazing, openParticipantPage, status, group }) => (
   <tr>
-    <td><a onClick={openParticipantPage(id)}>{id}</a></td>
+    <td><a onClick={openParticipantPage(id)}>{userid}</a></td>
     <td>{profit}</td>
     <td>{grazing}</td>
     <td>{status}</td>
@@ -28,7 +28,8 @@ const UsersList = ({page, participants, openParticipantPage}) => (
         Object.keys(participants).map(id => (
           <User
             key={id}
-            id={participants[id].id != null ? participants[id].id : "id : " + id}
+            id={id}
+            userid={participants[id].id != null ? participants[id].id : "id : " + id}
             profit={participants[id].profits.reduce((acc, val) => acc + val, 0)}
             grazing={participants[id].grazings.join(", ")}
             openParticipantPage={openParticipantPage}
