@@ -38,6 +38,7 @@ class Graph extends Component {
           text: 'グループ内での自分以外の放牧数(平均)',
           enabled: true,
         },
+        min: 0,
         max: maxGrazingNum * (groupSize - 1),
         startOnTick: true,
         endOnTick: true,
@@ -47,6 +48,7 @@ class Graph extends Component {
         title: {
           text: '自分の放牧数(平均)',
         },
+        min: 0,
         max: maxGrazingNum,
       },
       plotOptions: {

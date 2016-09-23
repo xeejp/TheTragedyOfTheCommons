@@ -6,12 +6,12 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import Graph from '../shared/Graph'
 
-const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, id, results, askStudentId }) => ({
+const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, uid, results, askStudentId }) => ({
   profits,
   maxRound,
   groupProfits,
   grazings,
-  id,
+  uid,
   results,
   askStudentId,
 })
@@ -84,9 +84,9 @@ class Result extends Component {
   }
 
   render() {
-    const { maxRound, profits, groupProfits, grazings, id, results, askStudentId } = this.props
+    const { maxRound, profits, groupProfits, grazings, uid, results, askStudentId } = this.props
     let anotherUsers = JSON.parse(JSON.stringify(results.participants))
-    delete anotherUsers[id]
+    delete anotherUsers[uid]
     return (
       <Card>
         <CardTitle title="共有地の悲劇" subtitle={"実験結果" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>

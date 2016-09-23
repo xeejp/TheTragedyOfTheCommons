@@ -32,10 +32,11 @@ defmodule TheTragedyOfTheCommons.Main do
     }
   end
 
-  def new_participant do
+  def new_participant(uid) do
     %{
       is_finish_description: false,
       id: nil,
+      uid: uid,
       profits: [],
       grazings: [],
       status: "waiting",
@@ -55,7 +56,7 @@ defmodule TheTragedyOfTheCommons.Main do
 
   def join(data, id) do
     unless Map.has_key?(data.participants, id) do
-      new = new_participant()
+      new = new_participant(id)
       if data.page == "waiting" do
         data = Map.update!(data, :active_participants_number, fn n -> n + 1 end)
       end
