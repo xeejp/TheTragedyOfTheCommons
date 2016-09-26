@@ -46,6 +46,20 @@ class Description extends Component {
     if (this.state.slideIndex == description.length) {
       this.props.finishDescription()
     }
+    let descList = [
+      <div>
+        <CardHeader
+          title="共有地の悲劇"
+          subtitle={"ルールの説明 " + (description.length + 1) + "/" + (description.length + 1)}
+        />
+        <CardText expandable={false}>
+          <p>実験が開始されるまで、しばらくお待ちください。</p>
+          <div style={{textAlign: "center"}}>
+            <CircularProgress />
+          </div>
+        </CardText>
+      </div>
+    ]
     return (
       <div>
         <Card style={{marginBottom: "5%"}}>
@@ -64,20 +78,8 @@ class Description extends Component {
                     {desc.text.split('\n').map( line => <p key={line}>{line}</p>)}
                   </CardText>
                 </div>
-              ))
+              )).concat(descList)
             }
-            <div>
-              <CardHeader
-                title="共有地の悲劇"
-                subtitle={"ルールの説明 " + (description.length + 1) + "/" + (description.length + 1)}
-              />
-              <CardText expandable={false}>
-                <p>実験が開始されるまで、しばらくお待ちください。</p>
-                <div style={{textAlign: "center"}}>
-                  <CircularProgress />
-                </div>
-              </CardText>
-            </div>
           </SwipeableViews>
         </Card>
         <RaisedButton
