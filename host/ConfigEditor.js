@@ -182,7 +182,7 @@ class ConfigEditor extends Component {
         <FloatingActionButton
           onClick={this.handleOpen.bind(this)}
           disabled={page != "waiting"}
-          style={{marginLeft: '5%'}}
+          style={{marginLeft: '2%'}}
         >
           <ActionSettingsIcon />
         </FloatingActionButton>

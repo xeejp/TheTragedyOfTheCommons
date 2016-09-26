@@ -71,7 +71,7 @@ class DownloadButton extends Component {
         <FloatingActionButton
           onClick={this.handleClick.bind(this)}
           disabled={page != "result"}
-          style={{marginLeft: '5%'}}
+          style={{marginLeft: '2%'}}
         >
           <FileDownloadIcon />
         </FloatingActionButton>

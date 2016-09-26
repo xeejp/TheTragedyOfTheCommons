@@ -57,8 +57,8 @@ class Description extends Component {
               description.map((desc, index) => (
                 <div key={index}>
                   <CardHeader
-                    title="説明"
-                    subtitle={(index+1) + "/" + (description.length + 1)}
+                    title="共有地の悲劇"
+                    subtitle={"ルールの説明 " + (index+1) + "/" + (description.length + 1)}
                   />
                   <CardText expandable={false}>
                     {desc.text.split('\n').map( line => <p key={line}>{line}</p>)}
@@ -68,8 +68,8 @@ class Description extends Component {
             }
             <div>
               <CardHeader
-                title="説明"
-                subtitle={(description.length + 1) + " / " + (description.length + 1)}
+                title="共有地の悲劇"
+                subtitle={"ルールの説明 " + (description.length + 1) + "/" + (description.length + 1)}
               />
               <CardText expandable={false}>
                 <p>実験が開始されるまで、しばらくお待ちください。</p>

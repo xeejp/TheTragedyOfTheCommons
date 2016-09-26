@@ -5,6 +5,7 @@ import { changePage } from './actions'
 
 import { Step, Stepper, StepButton} from 'material-ui/Stepper'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 
 const pages = ["waiting", "description", "experiment", "result"]
 const page_name = {"waiting": "待機", "description": "説明", "experiment": "実験", "result": "結果"}
@@ -80,14 +81,15 @@ class PageStepper extends Component {
           {steps}
         </Stepper>
         <div>
-          <RaisedButton
+          <FlatButton
             label="戻る"
-            style={{float: "left"}}
+            style={{marginLeft: '3%'}}
             onClick={this.backPage.bind(this)}
+            disabled={page == "waiting"}
           />
           <RaisedButton
             label="次へ"
-            style={{float: "right"}}
+            style={{marginLeft: '3%'}}
             primary={true}
             onClick={this.nextPage.bind(this)}
           />
