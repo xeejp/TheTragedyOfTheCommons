@@ -9,7 +9,6 @@ import reduceReducers from 'reduce-reducers'
 import { create as createJsondiffpatch } from 'jsondiffpatch'
 import clone from 'clone'
 import { fork, take, call } from 'redux-saga/effects'
-import throttle from 'react-throttle-render'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
@@ -64,10 +63,9 @@ export default function startApp(component, reducer, saga, host=false) {
 
   window.sendData = sendData
 
-  const ThrottledComponent = throttle(component, 50)
   render(
     <Provider store={store}>
-      {React.createElement(ThrottledComponent)}
+      {React.createElement(component)}
     </Provider>,
     document.getElementById("content")
   )

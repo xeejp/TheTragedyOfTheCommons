@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import throttle from 'react-throttle-render'
 
 import Highcharts from 'react-highcharts'
 
@@ -108,4 +109,4 @@ class Graph extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Graph)
+export default connect(mapStateToProps)(throttle(Graph, 200))

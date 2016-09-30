@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import throttle from 'react-throttle-render'
 
 import Badge from 'material-ui/Badge'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
@@ -125,4 +126,4 @@ class Users extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
+export default connect(mapStateToProps, mapDispatchToProps)(throttle(Users, 200))
