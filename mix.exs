@@ -1,8 +1,8 @@
-defmodule TheTragedyOfTheCommons.Mixfile do
+defmodule TragedyOfTheCommons.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :the_tragedy_of_the_commons,
+    [app: :xee_tragedy_of_the_commons,
      version: "0.1.0",
      build_path: "../../_build",
      config_path: "../../config/config.exs",

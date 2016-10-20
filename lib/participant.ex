@@ -1,4 +1,4 @@
-defmodule TheTragedyOfTheCommons.Participant do
+defmodule TragedyOfTheCommons.Participant do
   def finish_description(data, id) do
     update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
       |> update_in([:finish_description_number], fn prev -> prev + 1 end)

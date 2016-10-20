@@ -1,5 +1,5 @@
-defmodule TheTragedyOfTheCommons.Host do
-  alias TheTragedyOfTheCommons.Main
+defmodule TragedyOfTheCommons.Host do
+  alias TragedyOfTheCommons.Main
 
   defp ensure_integer(integer) when is_integer(integer), do: integer
   defp ensure_integer(str), do: Integer.parse(str) |> elem(0)

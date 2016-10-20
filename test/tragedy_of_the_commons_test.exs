@@ -1,6 +1,6 @@
-defmodule TheTragedyOfTheCommonsTest do
+defmodule TragedyOfTheCommonsTest do
   use ExUnit.Case
-  doctest TheTragedyOfTheCommons
+  doctest TragedyOfTheCommons
 
   test "the truth" do
     assert 1 + 1 == 2

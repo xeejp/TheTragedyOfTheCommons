@@ -1,6 +1,6 @@
-defmodule TheTragedyOfTheCommons.Main do
-  alias TheTragedyOfTheCommons.Host
-  alias TheTragedyOfTheCommons.Participant
+defmodule TragedyOfTheCommons.Main do
+  alias TragedyOfTheCommons.Host
+  alias TragedyOfTheCommons.Participant
 
   def init do
     %{
