@@ -1,4 +1,4 @@
-defmodule TheTragedyOfTheCommons.Participant do
+defmodule TragedyOfTheCommons.Participant do
   require Logger
   def finish_description(data, id) do
     data = update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
