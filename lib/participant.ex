@@ -1,7 +1,8 @@
-defmodule TragedyOfTheCommons.Participant do
+defmodule TheTragedyOfTheCommons.Participant do
+  require Logger
   def finish_description(data, id) do
-    update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
-      |> update_in([:finish_description_number], fn prev -> prev + 1 end)
+    data = update_in(data, [:participants, id, :is_finish_description], fn _ -> true end)
+    Map.put(data, :finish_description_number, Enum.count(data.participants, &(elem(&1, 1).is_finish_description)))
   end
 
   def update_snum(data, id, snum) do

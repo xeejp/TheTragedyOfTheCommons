@@ -11,8 +11,9 @@ import {Card, CardHeader, CardText} from 'material-ui/Card'
 const actionCreators = {
   finishDescription
 }
-const mapStateToProps = ({ description }) => ({
-  description
+const mapStateToProps = ({ description, is_finish_description }) => ({
+  description,
+  is_finish_description
 })
 
 class Description extends Component {
@@ -42,8 +43,8 @@ class Description extends Component {
   }
 
   render() {
-    const { description } = this.props
-    if (this.state.slideIndex == description.length) {
+    const { description, is_finish_description } = this.props
+    if (!is_finish_description && this.state.slideIndex == description.length) {
       this.props.finishDescription()
     }
     let descList = [
@@ -69,13 +70,14 @@ class Description extends Component {
           >
             {
               description.map((desc, index) => (
-                <div key={index}>
+                <div key={"div-" + String(index)}>
                   <CardHeader
+                    key={"header-" + String(index)}
                     title="共有地の悲劇"
                     subtitle={"ルールの説明 " + (index+1) + "/" + (description.length + 1)}
                   />
-                  <CardText expandable={false}>
-                    {desc.text.split('\n').map( line => <p key={line}>{line}</p>)}
+                  <CardText key={"text-" + String(index)} expandable={false}>
+                    {desc.text.split('\n').map(line => <p key={"text-lines-" + String(line)}>{line}</p>)}
                   </CardText>
                 </div>
               )).concat(descList)
