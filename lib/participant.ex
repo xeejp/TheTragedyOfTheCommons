@@ -24,20 +24,41 @@ defmodule TragedyOfTheCommons.Participant do
       #profit  = (grazings * (data.capacity - sum)) - (data.cost * grazings)
       #        = grazings * (data.capacity - sum - data.cost)
       sum = Enum.reduce(members, 0, fn(p, acc) -> Enum.at(p.grazings, group.round) + acc end)
-      data = Enum.reduce(group.members, data, fn i, acc -> put_in(acc, [:participants, i, :profits], List.insert_at(participants[i].profits, -1, (Enum.at(participants[i].grazings, group.round) * (data.capacity - sum - data.cost)))) end)
+      data = Enum.reduce(group.members, data, fn i, acc ->
+        put_in(acc,
+                [:participants, i, :profits],
+                List.insert_at(participants[i].profits, -1,
+                  (Enum.at(participants[i].grazings, group.round) * (data.capacity - sum - data.cost))))
+      end)
 
-      data = put_in(data, [:groups, group_id, :group_profits], List.insert_at(group.group_profits, -1, (data.capacity - sum - data.cost) * sum))
-      if group.round < data.max_round - 1 do
-        # round end
-        data = Enum.reduce(group.members, data, fn i, acc -> put_in(acc, [:participants, i, :answered], false) end)
-                |> update_in([:groups, group_id, :round], fn (x) -> x + 1 end)
-      else
-        # game end
+      data = put_in(data,
+                    [:groups, group_id, :group_profits],
+                    List.insert_at(group.group_profits, -1, (data.capacity - sum - data.cost) * sum))
+              |> put_in([:groups, group_id, :confirming], true)
+
+      # Game end?
+      if group.round == data.max_round - 1 do
         results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, participants[i].grazings) end)
-        data = put_in(data, [:groups, group_id, :group_status], "result")
-                |> put_in([:results, :participants], results)
         data = put_in(data, [:results, :groups], data.groups)
+                |> put_in([:results, :participants], results)
       end
+    end
+    data
+  end
+
+  def update_confirm(data, id) do
+    group_id = data.participants[id].group
+    group = data.groups[group_id]
+
+    data = put_in(data, [:participants, id, :confirmed], true)
+    confirmed = Enum.all?(group.members, &(data.participants[&1].confirmed))
+    if confirmed do
+      data = Enum.reduce(group.members, data, fn id, acc ->
+                put_in(acc, [:participants, id, :answered], false)
+                |> put_in([:participants, id, :confirmed], false)
+              end)
+            |> update_in([:groups, group_id, :round], &(&1 + 1))
+            |> put_in([:groups, group_id, :confirming], false)
     end
     data
   end

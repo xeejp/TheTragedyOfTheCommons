@@ -41,6 +41,7 @@ defmodule TragedyOfTheCommons.Host do
       %{ participant |
         group: group,
         answered: false,
+        confirmed: false,
         profits: [],
         grazings: [],
       }

@@ -43,6 +43,7 @@ defmodule TragedyOfTheCommons do
       {"finish description", _} -> Participant.finish_description(data, id)
       {"update snum", snum} -> Participant.update_snum(data, id, snum)
       {"update grazing", num} -> Participant.update_grazing(data, id, num)
+      {"update confirm", _} -> Participant.update_confirm(data, id)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)

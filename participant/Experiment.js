@@ -4,12 +4,23 @@ import { connect } from 'react-redux'
 import Chip from 'material-ui/Chip'
 import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import CircularProgress from 'material-ui/CircularProgress'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
 
 import InputSnum from './InputSnum'
 import PastureForm from './PastureForm'
 
-const mapStateToProps = ({ profits, maxRound, round, participantsNumber, id, answered, askStudentId }) => ({
+import { updateGrazing, updateConfirm } from './actions'
+
+const actionCreators = {
+  updateConfirm,
+}
+
+const mapStateToProps = ({ profits, grazings, confirming, confirmed, maxRound, round, participantsNumber, id, answered, askStudentId }) => ({
   profits,
+  grazings,
+  confirmed,
+  confirming,
   maxRound,
   round,
   participantsNumber,
@@ -24,8 +35,19 @@ class Experiment extends Component {
     this.state = {}
   }
 
+  handleClose() {
+    this.props.updateConfirm()
+  }
+
   render() {
-    const { maxRound, round, participantsNumber, id, answered, profits, askStudentId } = this.props
+    const { confirming, confirmed, maxRound, round, participantsNumber, id, answered, profits, grazings, askStudentId } = this.props
+    const actions = [
+      <FlatButton
+        label="OK"
+        primary={true}
+        onTouchTap={this.handleClose.bind(this)}
+      />
+    ]
     return (
       <Card>
         <CardTitle title="共有地の悲劇" subtitle={"実験中" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>
@@ -43,6 +65,17 @@ class Experiment extends Component {
                         <div style={{textAlign: "center"}}>
                           <CircularProgress />
                         </div>
+                        <Dialog
+                          title="放牧結果"
+                          actions={actions}
+                          modal={true}
+                          open={confirming && !confirmed}
+                        >
+                          <p>{round+1}回目のラウンドが終了しました。</p>
+                          <p>あなたの放牧数: {(grazings.length > round) ? grazings[round] : 0}頭</p>
+                          <p>あなたの利益: {(profits.length > round) ? profits[round] : 0}</p>
+                          <p>次のページに移動します。</p>
+                        </Dialog>
                       </div>
                   }
                 </div>
@@ -54,4 +87,4 @@ class Experiment extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Experiment)
+export default connect(mapStateToProps, actionCreators)(Experiment)

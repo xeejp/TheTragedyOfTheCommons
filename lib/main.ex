@@ -2,6 +2,8 @@ defmodule TragedyOfTheCommons.Main do
   alias TragedyOfTheCommons.Host
   alias TragedyOfTheCommons.Participant
 
+  require Logger
+
   def init do
     %{
       page: "waiting",
@@ -42,6 +44,7 @@ defmodule TragedyOfTheCommons.Main do
       status: "waiting",
       group: nil,
       answered: false,
+      confirmed: false,
     }
   end
 
@@ -50,6 +53,7 @@ defmodule TragedyOfTheCommons.Main do
       members: members,
       group_status: "playing",
       group_profits: [],
+      confirming: false,
       round: 0,
     }
   end

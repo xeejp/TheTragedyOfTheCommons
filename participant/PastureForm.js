@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import Paper from 'material-ui/Paper'
-import Snackbar from 'material-ui/Snackbar'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { updateGrazing } from './actions'
@@ -81,19 +80,8 @@ class PastureForm extends Component {
   constructor(props){
     super(props)
     this.state = {
-      open: false,
       value: 0,
     }
-  }
-
-  componentWillReceiveProps(props) {
-    this.setState({
-      open: true,
-    })
-  }
-
-  handleRequestClose() {
-    this.setState({ open: false })
   }
 
   handleClick() {
@@ -112,20 +100,28 @@ class PastureForm extends Component {
     let list = []
     const { round, cost, maxGrazingNum, members, capacity } = this.props
     for (let i = 1; i <= maxGrazingNum; ++i) {
-      list.push(<RaisedButton key={i} label={i + "頭"} style={{marginLeft: '1px'}} onMouseLeave={this.handleBlur.bind(this)} onMouseEnter={this.handleFocus.bind(this, i)} onFocus={this.handleFocus.bind(this, i)} onClick={(() => {
-        this.props.updateGrazing(i)
-      })}/>)
+      list.push(
+        <RaisedButton
+          key={i}
+          label={i + "頭"}
+          style={{marginLeft: '1px'}}
+          onMouseLeave={this.handleBlur.bind(this)}
+          onMouseEnter={this.handleFocus.bind(this, i)}
+          onFocus={this.handleFocus.bind(this, i)}
+          onClick={(() => {
+            this.props.updateGrazing(i)
+        })}/>)
     }
     return (<div>
       <p>放牧する牛の数を選択してください。</p>
       {list}
       <br /><br />
-      <ProfitTable value={this.state.value} cost={cost} maxGrazingNum={maxGrazingNum} groupSize={members.length} capacity={capacity} />
-      <Snackbar
-        open={this.state.open}
-        message={"Round " + (round + 1) +  "!"}
-        autoHideDuration={4000}
-        onRequestClose={this.handleRequestClose.bind(this)}
+      <ProfitTable
+        value={this.state.value}
+        cost={cost}
+        maxGrazingNum={maxGrazingNum}
+        groupSize={members.length}
+        capacity={capacity}
       />
    </div>)
   }
