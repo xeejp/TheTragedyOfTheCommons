@@ -10,6 +10,7 @@ defmodule TragedyOfTheCommons.Participant do
   end
 
   def update_grazing(data, id, num) do
+    false = data.participants[id].answered
     data = put_in(data, [:participants, id, :grazings], List.insert_at(data.participants[id].grazings, -1, num))
             |> put_in([:participants, id, :answered], true)
 
