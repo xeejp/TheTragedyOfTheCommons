@@ -13,7 +13,6 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import PageStepper from './PageStepper'
 import Users from './Users'
 import DownloadButton from './DownloadButton'
-import ResetButton from './ResetButton'
 import ConfigEditor from './ConfigEditor'
 import DescriptionEditor from './DescriptionEditor'
 import Graph from '../shared/Graph'
@@ -47,24 +46,11 @@ class App extends Component {
               marginBottom: '5%',
             }}
           />
-          <Users />
-          <Divider
-            style={{
-              marginTop: '5%',
-              marginBottom: '5%',
-            }}
-          />
-          {(page == "result") ? <Graph /> : null}
-          <ResetButton />
+          <Users /><br />
+          <Graph /><br />
           <ConfigEditor />
           <DescriptionEditor />
           <DownloadButton />
-          <Divider
-            style={{
-              marginTop: '5%',
-              marginBottom: '5%',
-            }}
-          />
         </div>
       </MuiThemeProvider>
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import throttle from 'react-throttle-render'
 
+import { Card, CardHeader, CardText } from 'material-ui/Card'
 import Highcharts from 'react-highcharts'
 
 const mapStateToProps = ({ results, maxRound, maxGrazingNum, groupSize }) => ({
@@ -14,7 +15,11 @@ const mapStateToProps = ({ results, maxRound, maxGrazingNum, groupSize }) => ({
 class Graph extends Component {
   constructor(props, context) {
     super(props, context)
-    this.state = {}
+    this.state = { expanded: false }
+  }
+
+  handleExpandChange(expanded) {
+    this.setState({expanded: expanded});
   }
 
   render() {
@@ -103,7 +108,12 @@ class Graph extends Component {
 
     config["series"][0]["data"] = data
     return (<div>
-        <Highcharts config={config} />
+        <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange.bind(this)}>
+          <CardHeader title="グラフ" actAsExpander={true} showExpandableButton={true} />
+            <CardText expandable={true}>
+              <Highcharts config={config} />
+            </CardText>
+        </Card>
       </div>
     )
   }

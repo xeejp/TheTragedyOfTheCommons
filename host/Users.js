@@ -26,11 +26,15 @@ const UsersList = ({page, participants, openParticipantPage}) => (
     <thead><tr><th>ID</th><th>Profit</th><th>Grazing</th><th>Status</th><th>Group ID</th></tr></thead>
     <tbody>
       {
-        Object.keys(participants).map(id => (
+        Object.keys(participants).sort((id1, id2) => {
+          if(participants[id1].group > participants[id2].group) return  1
+          if(participants[id1].group < participants[id2].group) return -1
+          return 0
+        }).map(id => (
           <User
             key={id}
             id={id}
-            userid={participants[id].id != null ? participants[id].id : "id : " + id}
+            userid={participants[id].id != null ? participants[id].id : id}
             profit={participants[id].profits.reduce((acc, val) => acc + val, 0)}
             grazing={participants[id].grazings.join(", ")}
             openParticipantPage={openParticipantPage}
@@ -99,7 +103,7 @@ class Users extends Component {
       <div>
         <Card>
           <CardHeader
-            title={<div>ユーザー<Badge badgeContent={String(activeParticipantsNumber)} primary={true}><PersonIcon /></Badge> ゲーム終了待機中のユーザー<Badge badgeContent={String(participantsNumber - activeParticipantsNumber)} secondary={true}><PersonOutlineIcon /></Badge></div>}
+            title={"登録者 " + ((participants)? Object.keys(participants).length : "0") + "人"}
             actAsExpander={true}
             showExpandableButton={true}
           />
@@ -108,20 +112,6 @@ class Users extends Component {
               page={page}
               participants={participants}
               openParticipantPage={openParticipantPage}
-            />
-          </CardText>
-        </Card>
-        <Card>
-          <CardHeader
-            title={<div>グループ<Badge badgeContent={String(groupsNumber)} primary={true}><PeopleIcon /></Badge></div>}
-            actAsExpander={true}
-            showExpandableButton={true}
-          />
-          <CardText expandable={true}>
-            <Groups
-              maxRound={maxRound}
-              groups={groups}
-              participants={participants}
             />
           </CardText>
         </Card>
