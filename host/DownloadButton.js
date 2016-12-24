@@ -48,8 +48,8 @@ class DownloadButton extends Component {
       + '牧草の量,' + capacity + '\n'
       + 'ID,' + (askStudentId ? '学籍番号,' : '') + colGrazing + colProfit + '合計利益,グループID\n'
       + users.join('\n') + '\n'
-
-    let blob = new Blob([content])
+    let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+    let blob = new Blob([bom,content])
     let url = window.URL || window.webkitURL
     let blobURL = url.createObjectURL(blob)
 
