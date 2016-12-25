@@ -14,6 +14,8 @@ import ImageDeleteIcon from 'material-ui/svg-icons/action/delete'
 
 import { updateDescription } from './actions'
 
+import { ReadJSON } from '../shared/ReadJSON'
+
 const actionCreators = {
   updateDescription,
 }
@@ -26,18 +28,18 @@ const mapStateToProps = ({ page, description }) => ({
 class DescriptionEditor extends Component {
   constructor(props, context) {
     super(props, context)
+    const { description } = this.props
+    var default_text = description
+    if(!description) {
+      default_text = ReadJSON().dynamic_text
+      this.props.updateDescription(default_text)
+    }
     this.state = {
       isOpenDialog: false,
       isOpenSnackbar: false,
       disabled: false,
       snackbarMessage: "",
-      defaultDescription: [
-        {id: 0, text: "数件の農家が山の中に共同で土地を持っているとします。"},
-        {id: 1, text: "その共有地には牧草がよく茂っていて、そこには、自由に放牧することが出来ます。"},
-        {id: 2, text: "いま、4件の農家が放牧を希望しているとし、各農家は3頭までの仔牛を買うことが出来ます。"},
-        {id: 3, text: "たくさんの牛が放牧されると、それだけ牛の生育が悪くなり、牛からの収益が落ちます。"},
-        {id: 4, text: "あなたは、農家の1人として、何頭の牛を放牧するかを選択してください。"}
-      ],
+      defaultDescription: default_text,
       description: [
         {id: 0, text: ""},
       ],
