@@ -6,6 +6,10 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 
 import Graph from '../shared/Graph'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, uid, results, askStudentId }) => ({
   profits,
   maxRound,
@@ -34,15 +38,15 @@ const ResultTable = ({ maxRound, grazings, profits, groupProfits, anotherUsers }
   <table className="highlight">
     <thead>
       <tr>
-        <th style={{textAlign: "center"}}>ラウンド</th>
-        <th style={{textAlign: "center"}}>放牧数</th>
+        <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][0]}</th>
+        <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][1]}</th>
         {
           Object.keys(anotherUsers).map((v, i) => (
-            <th key={i} style={{textAlign: "center"}}>{"ユーザー" + String(i + 1)}</th>
+            <th key={i} style={{textAlign: "center"}}>{multi_text["result"]["fig"][2] + String(i + 1)}</th>
           ))
         }
-        <th style={{textAlign: "center"}}>利益</th>
-        <th style={{textAlign: "center"}}>グループ全体の利益</th>
+        <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][3]}</th>
+        <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][4]}</th>
       </tr>
     </thead>
     <tbody>
@@ -64,7 +68,7 @@ const ResultTable = ({ maxRound, grazings, profits, groupProfits, anotherUsers }
         ))
       }
       <Round
-        index={"合計"}
+        index={multi_text["result"]["round"]}
         grazing={grazings.reduce((acc, val) => acc + val, 0)}
         anotherUsersGrazings={Object.keys(anotherUsers).map(_id => (
           anotherUsers[_id].reduce((acc, val) => acc + val, 0)
@@ -89,9 +93,9 @@ class Result extends Component {
     delete anotherUsers[uid]
     return (
       <Card>
-        <CardTitle title="共有地の悲劇" subtitle={"実験結果" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>
+        <CardTitle title={multi_text["result"]["card"][0]} subtitle={multi_text["result"]["card"][1] + (askStudentId ? multi_text["result"]["card"][2] + (id ? id : "") + ")" : "")}/>
         <CardText>
-          <p>以上で実験は終了になります。お疲れ様でした。</p>
+          <p>{multi_text["result"]["card"][3]}</p>
           <ResultTable
             maxRound={maxRound}
             grazings={grazings}

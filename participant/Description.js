@@ -8,6 +8,10 @@ import SwipeableViews from 'react-swipeable-views'
 import CircularProgress from 'material-ui/CircularProgress'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   finishDescription
 }
@@ -50,11 +54,11 @@ class Description extends Component {
     let descList = [
       <div>
         <CardHeader
-          title="共有地の悲劇"
-          subtitle={"ルールの説明 " + (description.length + 1) + "/" + (description.length + 1)}
+          title={multi_text["description"]["card"][0]}
+          subtitle={multi_text["description"]["card"][1] + (description.length + 1) + "/" + (description.length + 1)}
         />
         <CardText expandable={false}>
-          <p>実験が開始されるまで、しばらくお待ちください。</p>
+          <p>{multi_text["description"]["card"][2]}</p>
           <div style={{textAlign: "center"}}>
             <CircularProgress />
           </div>
@@ -73,8 +77,8 @@ class Description extends Component {
                 <div key={"div-" + String(index)}>
                   <CardHeader
                     key={"header-" + String(index)}
-                    title="共有地の悲劇"
-                    subtitle={"ルールの説明 " + (index+1) + "/" + (description.length + 1)}
+                    title={multi_text["description"]["card"][0]}
+                    subtitle={multi_text["description"]["card"][1] + (index+1) + "/" + (description.length + 1)}
                   />
                   <CardText key={"text-" + String(index)} expandable={false}>
                     {desc.text.split('\n').map(line => <p key={"text-lines-" + String(line)}>{line}</p>)}
@@ -85,13 +89,13 @@ class Description extends Component {
           </SwipeableViews>
         </Card>
         <RaisedButton
-          label="戻る"
+          label={multi_text["description"]["button"][0]}
           style={{float: "left"}}
           onTouchTap={this.handleBack.bind(this)}
           disabled={this.state.slideIndex == 0}
         />
         <RaisedButton
-          label="進む"
+          label={multi_text["description"]["button"][1]}
           style={{float: "right"}}
           onTouchTap={this.handleNext.bind(this)}
           primary={true}

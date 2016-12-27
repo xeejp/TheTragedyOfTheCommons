@@ -14,6 +14,10 @@ import Waiting from './Waiting'
 import Description from './Description'
 import Result from './Result'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   fetchContents
 }
@@ -53,10 +57,10 @@ class App extends Component {
               { (page == "result") ? <Result /> : null }
           </div>
           : <Card>
-              <CardTitle title="共有地の悲劇" subtitle="実験中"/>
+              <CardTitle title={multi_text["app"][0]} subtitle={multi_text["app"][1]}/>
               <CardText>
-                <p>実験はすでに開始されています。</p>
-                <p>実験が終了するまでお待ちください。</p>
+                <p>{multi_text["app"][2]}</p>
+                <p>{multi_text["app"][3]}</p>
               </CardText>
           </Card>
         }

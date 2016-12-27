@@ -11,6 +11,10 @@ import PersonOutlineIcon from 'material-ui/svg-icons/social/person-outline'
 
 import { openParticipantPage } from './actions'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const User = ({ id, userid, profit, grazing, openParticipantPage, status, group }) => (
   <tr>
     <td><a onClick={openParticipantPage(id)}>{userid}</a></td>
@@ -103,7 +107,7 @@ class Users extends Component {
       <div>
         <Card>
           <CardHeader
-            title={"登録者 " + ((participants)? Object.keys(participants).length : "0") + "人"}
+            title={multi_text["users"][0] + ((participants)? Object.keys(participants).length : "0") + multi_text["users"][1]}
             actAsExpander={true}
             showExpandableButton={true}
           />

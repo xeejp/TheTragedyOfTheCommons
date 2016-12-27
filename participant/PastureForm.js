@@ -6,6 +6,10 @@ import RaisedButton from 'material-ui/RaisedButton'
 
 import { updateGrazing } from './actions'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   updateGrazing,
 }
@@ -52,11 +56,11 @@ class ProfitTable extends Component {
       <Paper>
         <br />
         <table className="highlight">
-          <caption>利益表</caption>
+          <caption>{multi_text["pasture_form"][0]}</caption>
           <thead>
             <tr>
               <th></th>
-              <th style={{textAlign: 'center'}} colSpan={sumOfCattles - 2}>自分以外の農家の放牧数の和</th>
+              <th style={{textAlign: 'center'}} colSpan={sumOfCattles - 2}>{multi_text["pasture_form"][1]}</th>
             </tr>
             <tr>
               <th key={uuid()}></th>
@@ -66,7 +70,7 @@ class ProfitTable extends Component {
           </thead>
           <tbody>
             <tr>
-              <th style={{textAlign: 'center'}} rowSpan={maxGrazingNum + 1}>自分の放牧数</th>
+              <th style={{textAlign: 'center'}} rowSpan={maxGrazingNum + 1}>{multi_text["pasture_form"][2]}</th>
             </tr>
             {body}
           </tbody>
@@ -103,7 +107,7 @@ class PastureForm extends Component {
       list.push(
         <RaisedButton
           key={i}
-          label={i + "頭"}
+          label={i + multi_text["pasture_form"][3]}
           style={{marginLeft: '1px'}}
           onMouseLeave={this.handleBlur.bind(this)}
           onMouseEnter={this.handleFocus.bind(this, i)}
@@ -113,7 +117,7 @@ class PastureForm extends Component {
         })}/>)
     }
     return (<div>
-      <p>放牧する牛の数を選択してください。</p>
+      <p>{multi_text["pasture_form"][4]}</p>
       {list}
       <br /><br />
       <ProfitTable

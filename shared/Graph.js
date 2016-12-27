@@ -5,6 +5,10 @@ import throttle from 'react-throttle-render'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 import Highcharts from 'react-highcharts'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const mapStateToProps = ({ results, maxRound, maxGrazingNum, groupSize }) => ({
   results,
   maxRound,
@@ -31,17 +35,17 @@ class Graph extends Component {
         zoomType: 'xy'
       },
       title: {
-        text: '共有地の悲劇'
+        text: multi_text["graph"]["title"][0]
       },
       subtitle: {
-        text: '実験結果'
+        text: multi_text["graph"]["title"][1]
       },
       legend: {
         enabled: false,
       },
       xAxis: {
         title: {
-          text: 'グループ内での自分以外の放牧数(平均)',
+          text: multi_text["graph"]["axis"][0],
           enabled: true,
         },
         min: 0,
@@ -52,7 +56,7 @@ class Graph extends Component {
       },
       yAxis: {
         title: {
-          text: '自分の放牧数(平均)',
+          text: multi_text["graph"]["axis"][1],
         },
         min: 0,
         max: maxGrazingNum,
@@ -77,7 +81,7 @@ class Graph extends Component {
           },
           tooltip: {
             headerFormat: '',
-            pointFormat: '{point.x} 頭, {point.y} 頭'
+            pointFormat: multi_text["graph"]["else"][0] 
           }
         }
       },
@@ -109,7 +113,7 @@ class Graph extends Component {
     config["series"][0]["data"] = data
     return (<div>
         <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange.bind(this)}>
-          <CardHeader title="グラフ" actAsExpander={true} showExpandableButton={true} />
+          <CardHeader title={multi_text["graph"]["else"][1]} actAsExpander={true} showExpandableButton={true} />
             <CardText expandable={true}>
               <Highcharts config={config} />
             </CardText>

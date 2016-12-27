@@ -6,6 +6,10 @@ import { updateSnum } from './actions'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   updateSnum,
 }
@@ -23,7 +27,7 @@ class InputSnum extends Component {
 
   submit() {
     if(this.state.snum != "") {
-      this.props.updateSnum(this.state.snum.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0) }).replace(/[^\x01-\x7E]/g, "").trim())
+      this.props.updateSnum(this.state.snum.replace(multi_text["input_snum"][0], s => { return String.fromCharCode(s.charCodeAt(0) - 0xFEE0) }).replace(/[^\x01-\x7E]/g, "").trim())
     }
   }
 
@@ -35,13 +39,13 @@ class InputSnum extends Component {
 
   render() {
     return (<div>
-    <p>学籍番号を入力してください。</p>
+    <p>{multi_text["input_snum"][1]}</p>
     <TextField
-      hintText={"学籍番号"}
+      hintText={multi_text["input_snum"][2]}
       onChange={this.handleUpdate.bind(this)}
       onKeyDown={this.handleKeyDown.bind(this)}
     />
-    <RaisedButton label={"送信"} primary={true} disabled={this.state.snum == ""} onClick={this.submit.bind(this)} />
+    <RaisedButton label={multi_text["input_snum"][3]} primary={true} disabled={this.state.snum == ""} onClick={this.submit.bind(this)} />
    </div>)
   }
 }

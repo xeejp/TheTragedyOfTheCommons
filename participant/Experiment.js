@@ -12,6 +12,10 @@ import PastureForm from './PastureForm'
 
 import { updateGrazing, updateConfirm } from './actions'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   updateConfirm,
 }
@@ -50,7 +54,7 @@ class Experiment extends Component {
     ]
     return (
       <Card>
-        <CardTitle title="共有地の悲劇" subtitle={"実験中" + (askStudentId ? " (学籍番号: " + (id ? id : "") + ")" : "")}/>
+        <CardTitle title={multi_text["experiment"]["card"][0]} subtitle={multi_text["experiment"]["card"][1] + (askStudentId ? multi_text["experiment"]["card"][2] + (id ? id : "") + ")" : "")}/>
         <CardText>
           {(askStudentId && id == null)
             ? <InputSnum />
@@ -61,20 +65,20 @@ class Experiment extends Component {
                   {(!answered)
                     ? <PastureForm />
                       : <div>
-                        <p>他の参加者の回答を待機しています。しばらくお待ちください。</p>
+                        <p>{multi_text["experiment"]["end"]}</p>
                         <div style={{textAlign: "center"}}>
                           <CircularProgress />
                         </div>
                         <Dialog
-                          title="放牧結果"
+                          title={multi_text["experiment"]["dialog"][0]}
                           actions={actions}
                           modal={true}
                           open={confirming && !confirmed}
                         >
-                          <p>{round+1}回目のラウンドが終了しました。</p>
-                          <p>あなたの放牧数: {(grazings.length > round) ? grazings[round] : 0}頭</p>
-                          <p>あなたの利益: {(profits.length > round) ? profits[round] : 0}</p>
-                          <p>次のページに移動します。</p>
+                          <p>{round+1}{multi_text["experiment"]["dialog"][1]}</p>
+                          <p>{multi_text["experiment"]["dialog"][2]}: {(grazings.length > round) ? grazings[round] : 0}{multi_text["experiment"]["dialog"][3]}</p>
+                          <p>{multi_text["experiment"]["dialog"][4]}: {(profits.length > round) ? profits[round] : 0}</p>
+                          <p>{multi_text["experiment"]["dialog"][5]}</p>
                         </Dialog>
                       </div>
                   }

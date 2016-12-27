@@ -5,6 +5,10 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import FileDownloadIcon from 'material-ui/svg-icons/file/file-download'
 import Snackbar from 'material-ui/Snackbar'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId }) => ({
   page,
   participants,
@@ -33,20 +37,20 @@ class DownloadButton extends Component {
       return (id + ',' + (askStudentId ? (user.id + ',') : '') + user.grazings.join(',') + ',' + user.profits.join(',') + ',' + user.profits.reduce((prev, curr) => prev + curr, 0) + ',' + user.group)
     })
 
-    let colGrazing = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + '放牧:' + (i + 1) + '回目,'), '')
-    let colProfit = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + '利益:' + (i + 1) + '回目,'), '')
+    let colGrazing = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + multi_text["download"]["dt"][1] + (i + 1) + multi_text["download"]["dt"][0]), '')
+    let colProfit = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + multi_text["download"]["dt"][2] + (i + 1) + multi_text["download"]["dt"][0]), '')
 
     let date = new Date()
-    let content = '共有地の悲劇\n'
-      + '実験日,' + date + '\n'
-      + '登録者数,' + participantsNumber + '\n'
-      + 'グループ数,' + groupsNumber + '\n'
-      + '1グループの人数,' + groupSize + '\n'
-      + 'ラウンド数,' + maxRound + '\n'
-      + '最大放牧可能数,' + maxGrazingNum + '\n'
-      + '牛の価格,' + cost + '\n'
-      + '牧草の量,' + capacity + '\n'
-      + 'ID,' + (askStudentId ? '学籍番号,' : '') + colGrazing + colProfit + '合計利益,グループID\n'
+    let content = multi_text["download"]["dt"][3]
+      + multi_text["download"]["dt"][4] + date + '\n'
+      + multi_text["download"]["ddt"][0] + participantsNumber + '\n'
+      + multi_text["download"]["ddt"][1] + groupsNumber + '\n'
+      + multi_text["download"]["ddt"][2] + groupSize + '\n'
+      + multi_text["download"]["ddt"][3] + maxRound + '\n'
+      + multi_text["download"]["ddt"][4] + maxGrazingNum + '\n'
+      + multi_text["download"]["dddt"][0] + cost + '\n'
+      + multi_text["download"]["dddt"][1] + capacity + '\n'
+      + 'ID,' + (askStudentId ? multi_text["download"]["dddt"][2] : '') + colGrazing + colProfit + multi_text["download"]["dddt"][3]
       + users.join('\n') + '\n'
     let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
     let blob = new Blob([bom,content])
@@ -77,7 +81,7 @@ class DownloadButton extends Component {
         </FloatingActionButton>
         <Snackbar
           open={this.state.open}
-          message={'実験結果をCSV形式で保存しました。'}
+          message={multi_text["download"]["dddt"][4]}
           autoHideDuration={2000}
           onRequestClose={this.handleRequestClose.bind(this)}
         />

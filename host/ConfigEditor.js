@@ -15,6 +15,10 @@ import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColu
 
 import { updateConfig } from './actions'
 
+import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+
+const multi_text = ReadJSON().static_text
+
 const actionCreators = {
   updateConfig,
 }
@@ -136,7 +140,7 @@ class ConfigEditor extends Component {
     this.setState({
       isOpenDialog: false,
       isOpenSnackbar: true,
-      snackbarMessage: "設定を送信しました",
+      snackbarMessage: multi_text["snackbar"][0],
     })
     let config = {
       maxRound: this.state.maxRound,
@@ -153,7 +157,7 @@ class ConfigEditor extends Component {
     this.setState({
       isOpenDialog: false,
       isOpenSnackbar: true,
-      snackbarMessage: "設定を初期化しました",
+      snackbarMessage: multi_text["snackbar"][1],
     })
     this.props.updateConfig(this.state.defaultConfig)
   }
@@ -162,18 +166,18 @@ class ConfigEditor extends Component {
     const { page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId } = this.props
     const actions = [
       <RaisedButton
-        label="適用"
+        label={multi_text["config_button"][0]}
         primary={true}
         keyboardFocused={true}
         onTouchTap={this.submit.bind(this)}
         disabled={this.state.disabled}
       />,
       <RaisedButton
-        label="キャンセル"
+        label={multi_text["config_button"][1]}
         onTouchTap={this.handleClose.bind(this)}
         />,
       <RaisedButton
-        label="初期化"
+        label={multi_text["config_button"][2]}
         onTouchTap={this.reset.bind(this)}
       />
     ]
@@ -187,58 +191,58 @@ class ConfigEditor extends Component {
           <ActionSettingsIcon />
         </FloatingActionButton>
         <Dialog
-          title="設定編集"
+          title={multi_text["config_editor"]["dt"][0]}
           actions={actions}
           model={false}
           open={this.state.isOpenDialog}
           autoScrollBodyContent={true}
         >
-          <p>学籍番号入力</p>
+          <p>multi_text["config_editor"]["dt"][1]</p>
           <Toggle
-            label={"学籍番号入力" + (this.state.askStudentId ? "を行う" : "行わない")}
+            label={multi_text["config_editor"]["dt"][1]+ (this.state.askStudentId ? multi_text["config_editor"]["dt"][2] : multi_text["config_editor"]["dt"][3])}
             toggled={this.state.askStudentId}
             onToggle={this.handleChangeAskStudentId.bind(this)}
           />
 
-          <p>ラウンド数</p>
+          <p>{multi_text["config_editor"]["dt"][4]}</p>
           <TextField
-            hintText={"ラウンド数(正の整数)"}
+            hintText={multi_text["config_editor"]["ddt"][0]}
             multiLine={false}
             fullWidth={true}
             onChange={this.handleChangeMaxRound.bind(this)}
             value={this.state.maxRound}
           />
 
-          <p>１グループの人数</p>
+          <p>{multi_text["config_editor"]["ddt"][1]}</p>
           <TextField
-            hintText={"グループの人数(正の整数)"}
+            hintText={multi_text["config_editor"]["ddt"][2]}
             multiLine={false}
             fullWidth={true}
             onChange={this.handleChangeGroupSize.bind(this)}
             value={this.state.groupSize}
           />
 
-          <p>放牧地の草の量</p>
+          <p>{multi_text["config_editor"]["ddt"][3]}</p>
           <TextField
-            hintText={"牧草の量(正の整数)"}
+            hintText={multi_text["config_editor"]["ddt"][4]}
             multiLine={false}
             fullWidth={true}
             onChange={this.handleChangeCapacity.bind(this)}
             value={this.state.capacity}
           />
 
-          <p>農家が購入できる仔牛の数</p>
+          <p>{multi_text["config_editor"]["dddt"][0]}</p>
           <TextField
-            hintText={"仔牛の数(正の整数)"}
+            hintText={multi_text["config_editor"]["dddt"][1]}
             multiLine={false}
             fullWidth={true}
             onChange={this.handleChangeMaxGrazingNum.bind(this)}
             value={this.state.maxGrazingNum}
           />
 
-          <p>仔牛の価格</p>
+          <p>{multi_text["config_editor"]["dddt"][2]}</p>
           <TextField
-            hintText={"仔牛の価格(正の整数)"}
+            hintText={multi_text["config_editor"]["dddt"][3]}
             multiLine={false}
             fullWidth={true}
             onChange={this.handleChangeCost.bind(this)}
