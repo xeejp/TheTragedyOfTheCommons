@@ -34,11 +34,20 @@ const UsersList = ({page, participants, openParticipantPage}) => (
             profit={participants[id].profits.reduce((acc, val) => acc + val, 0)}
             grazing={participants[id].grazings.join(", ")}
             openParticipantPage={openParticipantPage}
-            status={(participants[id].group == null) ? "Wait Matching"
-              : (page != "experiment") ? (page != "description") ? page
-                                                                     : participants[id].is_finish_description ? "Read" : "Reading"
-                                           : (participants[id].answered ? "Answerd"
-                                                                        : "Answering")}
+            status={(participants[id].group == null)
+              ? "Wait Matching"
+              : (page != "experiment")
+                ? (page != "description")
+                  ? page
+                  : participants[id].is_finish_description
+                    ? "Read"
+                    : "Reading"
+                : (participants[id].status == "result")
+                  ? "Result"
+                  : participants[id].answered
+                    ? "Answerd"
+                    : "Answering"
+            }
             group={participants[id].group}
           />
         ))
