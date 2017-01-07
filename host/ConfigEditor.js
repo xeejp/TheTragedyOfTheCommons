@@ -197,7 +197,7 @@ class ConfigEditor extends Component {
           open={this.state.isOpenDialog}
           autoScrollBodyContent={true}
         >
-          <p>multi_text["config_editor"]["dt"][1]</p>
+          <p>{multi_text["config_editor"]["dt"][1]}</p>
           <Toggle
             label={multi_text["config_editor"]["dt"][1]+ (this.state.askStudentId ? multi_text["config_editor"]["dt"][2] : multi_text["config_editor"]["dt"][3])}
             toggled={this.state.askStudentId}
