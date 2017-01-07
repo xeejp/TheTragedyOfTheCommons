@@ -23,7 +23,7 @@ defmodule TragedyOfTheCommons do
 
   # Host router
   def handle_received(data, %{"action" => action, "params" => params}) do
-    Logger.debug("[TragedyOfTheCommons] #{action} #{inspect params}")
+    #Logger.debug("[TragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_host_contents(data)
       {"change page", page} -> Host.change_page(data, page)
@@ -37,7 +37,7 @@ defmodule TragedyOfTheCommons do
 
   # Participant router
   def handle_received(data, %{"action" => action, "params" => params}, id) do
-    Logger.debug("[TragedyOfTheCommons] #{action} #{inspect params}")
+    #Logger.debug("[TragedyOfTheCommons] #{action} #{inspect params}")
     result = case {action, params} do
       {"fetch contents", _} -> Actions.update_participant_contents(data, id)
       {"finish description", _} -> Participant.finish_description(data, id)

@@ -96,7 +96,7 @@ class Graph extends Component {
 
     let data = []
     Object.keys(results.groups).forEach(group_id => {
-      if (results.groups[group_id].group_status == 'result') {
+      if (results.groups[group_id].groupStatus == 'result' || results.groups[group_id].group_status == 'result') {
         let members = results.groups[group_id].members.map(_id =>
             results.participants[_id].reduce((acc, val) => acc + val, 0)
         )
@@ -109,7 +109,6 @@ class Graph extends Component {
         })
       }
     })
-
     config["series"][0]["data"] = data
     return (<div>
         <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange.bind(this)}>
