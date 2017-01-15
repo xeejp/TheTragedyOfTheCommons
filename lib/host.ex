@@ -27,6 +27,10 @@ defmodule TragedyOfTheCommons.Host do
     end
   end
 
+  def visit(data) do
+    Map.put(data, :is_first_visit, false)
+  end
+
   def match(data) do
     %{participants: participants, group_size: group_size} = data
 
@@ -63,6 +67,7 @@ defmodule TragedyOfTheCommons.Host do
   def get_filter(data) do
     map = %{
       _default: true,
+      is_first_visit: "isFirstVisit",
       participants_number: "participantsNumber",
       active_participants_number: "activeParticipantsNumber",
       finish_description_number: "finishDescriptionNumber",

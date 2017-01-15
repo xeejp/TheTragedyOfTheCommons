@@ -6,6 +6,7 @@ defmodule TragedyOfTheCommons.Main do
 
   def init do
     %{
+      is_first_visit: true,
       page: "waiting",
       joinable: true,
       description: nil,

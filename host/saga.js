@@ -2,7 +2,7 @@ import { fork, take, call } from 'redux-saga/effects'
 import { takeEvery } from 'redux-saga'
 
 import { fetchContents } from 'shared/actions'
-import { changePage, match, updateConfig, updateDescription } from './actions'
+import { changePage, match, visit, updateConfig, updateDescription } from './actions'
 
 function* fetchContentsSaga() {
   yield call(sendData, 'fetch contents')
@@ -23,6 +23,10 @@ function* updateDescriptionSaga(action) {
   yield call(sendData, 'update description', payload)
 }
 
+function* visitSaga() {
+  yield call(sendData, 'visit')
+}
+
 function* matchSaga() {
   yield call(sendData, 'match')
 }
@@ -32,6 +36,7 @@ function* saga() {
   yield fork(takeEvery, changePage.getType(), changePageSaga)
   yield fork(takeEvery, updateConfig.getType(), updateConfigSaga)
   yield fork(takeEvery, updateDescription.getType(), updateDescriptionSaga)
+  yield fork(takeEvery, visit.getType(), visitSaga)
   yield fork(takeEvery, match.getType(), matchSaga)
 }
 

@@ -30,6 +30,7 @@ defmodule TragedyOfTheCommons do
       {"update config", config} -> Host.update_config(data, config)
       {"update description", description} -> Host.update_description(data, description)
       {"match", _} -> Host.match(data)
+      {"visit", _} -> Host.visit(data)
       _ -> {:ok, %{data: data}}
     end
     wrap_result(data, result)

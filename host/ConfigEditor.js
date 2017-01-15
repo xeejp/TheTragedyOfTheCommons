@@ -13,7 +13,7 @@ import Snackbar from 'material-ui/Snackbar'
 import Toggle from 'material-ui/Toggle'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table'
 
-import { updateConfig } from './actions'
+import { updateConfig, visit } from './actions'
 
 import { ReadJSON, LineBreak } from '../shared/ReadJSON'
 
@@ -21,9 +21,10 @@ const multi_text = ReadJSON().static_text
 
 const actionCreators = {
   updateConfig,
+  visit
 }
 
-const mapStateToProps = ({ page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId }) => ({
+const mapStateToProps = ({ page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId, isFirstVisit }) => ({
   page,
   maxRound,
   cost,
@@ -31,6 +32,7 @@ const mapStateToProps = ({ page, maxRound, cost, maxGrazingNum, capacity, groupS
   capacity,
   groupSize,
   askStudentId,
+  isFirstVisit
 })
 
 class ConfigEditor extends Component {
@@ -59,8 +61,12 @@ class ConfigEditor extends Component {
     }
   }
 
-  componentDidReceiveProps() {
-    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId } = this.props
+  componentWillReceiveProps(nextProps) {
+    const { page, maxRound, cost, maxGrazingNum, capacity, groupSize, askStudentId, isFirstVisit, visit } = nextProps
+    const open = isFirstVisit || this.state.isOpenDialog
+    if (isFirstVisit) {
+      visit()
+    }
     this.setState({
       cost: cost,
       capacity: capacity,
@@ -68,6 +74,7 @@ class ConfigEditor extends Component {
       maxGrazingNum: maxGrazingNum,
       groupSize: groupSize,
       askStudentId: askStudentId,
+      isOpenDialog: open
     })
   }
 
