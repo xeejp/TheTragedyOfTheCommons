@@ -10,7 +10,7 @@ import { ReadJSON, LineBreak } from '../shared/ReadJSON'
 
 const multi_text = ReadJSON().static_text
 
-const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, uid, results, askStudentId }) => ({
+const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, uid, results, askStudentId, members }) => ({
   profits,
   maxRound,
   groupProfits,
@@ -18,18 +18,19 @@ const mapStateToProps = ({ profits, maxRound, groupProfits, grazings, uid, resul
   uid,
   results,
   askStudentId,
+  members,
 })
 
 const Round = ({ index, grazing, profit, groupProfit, style, anotherUsersGrazings }) => (
   <tr>
     <td style={style}>{index}</td>
-    <td style={style}>{grazing}</td>
+    <td className="blue lighten-5" style={style}>{grazing}</td>
     {
       anotherUsersGrazings && anotherUsersGrazings.map((val, idx) => (
         <td key={'round' + (index * 10) + idx} style={style}>{val}</td>
       ))
     }
-    <td style={style}>{profit}</td>
+    <td className="blue lighten-5" style={style}>{profit}</td>
     <td style={style}>{groupProfit}</td>
   </tr>
 )
@@ -88,8 +89,11 @@ class Result extends Component {
   }
 
   render() {
-    const { maxRound, profits, groupProfits, grazings, uid, results, askStudentId } = this.props
-    let anotherUsers = JSON.parse(JSON.stringify(results.participants))
+    const { maxRound, profits, groupProfits, grazings, uid, results, askStudentId, members } = this.props
+    let anotherUsers = {}
+    members.forEach(function(_id) {
+      anotherUsers[_id] = results.participants[_id]
+    })
     delete anotherUsers[uid]
     return (
       <Card>
