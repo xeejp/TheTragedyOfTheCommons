@@ -21,7 +21,7 @@ const actionCreators = {
 	updateConfirm,
 }
 
-const mapStateToProps = ({ profits, grazings, confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, askStudentId, groupSize }) => ({
+const mapStateToProps = ({ profits, grazings, confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, askStudentId, groupSize, members }) => ({
 	profits,
 	grazings,
 	confirmed,
@@ -35,6 +35,7 @@ const mapStateToProps = ({ profits, grazings, confirming, confirmed, confirms, m
 	answers,
 	askStudentId,
 	groupSize,
+	members,
 })
 
 class Experiment extends Component {
@@ -48,7 +49,7 @@ class Experiment extends Component {
 	}
 
 	render() {
-		const { confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, profits, grazings, askStudentId, groupSize } = this.props
+		const { confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, profits, grazings, askStudentId, groupSize, members } = this.props
 		const actions = [
 			<FlatButton
 				label="OK"
@@ -71,8 +72,8 @@ class Experiment extends Component {
 											: <div>
 													<p>{multi_text["experiment"]["end"]}</p>
 													{(confirming)?
-														<p>(確認：{confirms}人/{groupSize}人中)</p>
-														:<p>(解答済み：{answers}人/{groupSize}人中)</p>
+														<p>(確認：{confirms}人/{members.length}人中)</p>
+														:<p>(解答済み：{answers}人/{members.length}人中)</p>
 													}
 													<div style={{textAlign: "center"}}>
 													<CircularProgress />

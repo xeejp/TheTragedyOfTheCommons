@@ -18,11 +18,14 @@ defmodule TragedyOfTheCommons.Host do
   end
 
   def change_page(data, page) do
+    if data.page == "waiting" && page == "description" do
+      data = Map.update!(data, :results, fn _ -> %{ groups: %{}, participants: %{} } end)
+             |> match()
+    end
     data = Map.update!(data, :page, fn _ -> page end)
     case page do
       "waiting" -> Map.update!(data, :joinable, fn _ -> true end)
                     |> Map.update!(:active_participants_number, fn _ -> data.participants_number end)
-      "description" -> match(data)
       _ -> data
     end
   end
@@ -48,6 +51,9 @@ defmodule TragedyOfTheCommons.Host do
         confirmed: false,
         profits: [],
         grazings: [],
+        answers: 0,
+        confirms: 0,
+        status: "experiment"
       }
     end
     reducer = fn {group, ids}, {participants, groups} ->
