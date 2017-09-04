@@ -9,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton'
 
 import InputSnum from './InputSnum'
 import PastureForm from './PastureForm'
+import GrazedResult from './GrazedResult'
 
 import { updateGrazing, updateConfirm } from './actions'
 
@@ -17,78 +18,82 @@ import { ReadJSON, LineBreak } from '../shared/ReadJSON'
 const multi_text = ReadJSON().static_text
 
 const actionCreators = {
-  updateConfirm,
+	updateConfirm,
 }
 
-const mapStateToProps = ({ profits, grazings, confirming, confirmed, maxRound, round, participantsNumber, id, answered, askStudentId }) => ({
-  profits,
-  grazings,
-  confirmed,
-  confirming,
-  maxRound,
-  round,
-  participantsNumber,
-  id,
-  answered,
-  askStudentId,
+const mapStateToProps = ({ profits, grazings, confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, askStudentId, groupSize }) => ({
+	profits,
+	grazings,
+	confirmed,
+	confirms,
+	confirming,
+	maxRound,
+	round,
+	participantsNumber,
+	id,
+	answered,
+	answers,
+	askStudentId,
+	groupSize,
 })
 
 class Experiment extends Component {
-  constructor(props, context) {
-    super(props, context)
-    this.state = {}
-  }
+	constructor(props, context) {
+		super(props, context)
+		this.state = {}
+	}
 
-  handleClose() {
-    this.props.updateConfirm()
-  }
+	handleClose() {
+		this.props.updateConfirm()
+	}
 
-  render() {
-    const { confirming, confirmed, maxRound, round, participantsNumber, id, answered, profits, grazings, askStudentId } = this.props
-    const actions = [
-      <FlatButton
-        label="OK"
-        primary={true}
-        onTouchTap={this.handleClose.bind(this)}
-      />
-    ]
-    return (
-      <Card>
-        <CardTitle title={multi_text["experiment"]["card"][0]} subtitle={multi_text["experiment"]["card"][1] + (askStudentId ? multi_text["experiment"]["card"][2] + (id ? id : "") + ")" : "")}/>
-        <CardText>
-          {(askStudentId && id == null)
-            ? <InputSnum />
-              : <div>
-                <Chip style={{float: "left"}}>Current Round : {round + 1 + " / " + maxRound}</Chip>
-                <Chip style={{float: "right"}}>Total Profit : {profits.reduce((acc, val) => acc + val, 0)}</Chip>
-                <div style={{clear: "both"}}>
-                  {(!answered)
-                    ? <PastureForm />
-                      : <div>
-                        <p>{multi_text["experiment"]["end"]}</p>
-                        <div style={{textAlign: "center"}}>
-                          <CircularProgress />
-                        </div>
-                        <Dialog
-                          title={multi_text["experiment"]["dialog"][0]}
-                          actions={actions}
-                          modal={true}
-                          open={confirming && !confirmed}
-                        >
-                          <p>{round+1}{multi_text["experiment"]["dialog"][1]}</p>
-                          <p>{multi_text["experiment"]["dialog"][2]}: {(grazings.length > round) ? grazings[round] : 0}{multi_text["experiment"]["dialog"][3]}</p>
-                          <p>{multi_text["experiment"]["dialog"][4]}: {(profits.length > round) ? profits[round] : 0}</p>
-                          <p>{multi_text["experiment"]["dialog"][5]}</p>
-                        </Dialog>
-                      </div>
-                  }
-                </div>
-              </div>
-          }
-        </CardText>
-      </Card>
-    )
-  }
+	render() {
+		const { confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, profits, grazings, askStudentId, groupSize } = this.props
+		const actions = [
+			<FlatButton
+				label="OK"
+				primary={true}
+				onTouchTap={this.handleClose.bind(this)}
+			/>
+		]
+		return (
+			<Card>
+				<CardTitle title={multi_text["experiment"]["card"][0]} subtitle={multi_text["experiment"]["card"][1] + (askStudentId ? multi_text["experiment"]["card"][2] + (id ? id : "") + ")" : "")}/>
+				<CardText>
+					{(askStudentId && id == null)
+						? <InputSnum />
+							: <div>
+								<Chip style={{float: "left"}}>{multi_text["experiment"]["round"] + " : " + ((round+1==maxRound)?multi_text["experiment"]["roundend"]:((round + 1) + " / " + maxRound))}</Chip>
+								<Chip style={{float: "right"}}>{multi_text["experiment"]["profit"] + ":" + profits.reduce((acc, val) => acc + val, 0)}</Chip>
+								<div style={{clear: "both"}}>
+									{(!answered)
+										? <PastureForm />
+											: <div>
+													<p>{multi_text["experiment"]["end"]}</p>
+													{(confirming)?
+														<p>(確認：{confirms}人/{groupSize}人中)</p>
+														:<p>(解答済み：{answers}人/{groupSize}人中)</p>
+													}
+													<div style={{textAlign: "center"}}>
+													<CircularProgress />
+												</div>
+												<Dialog
+													title={multi_text["experiment"]["dialog"]}
+													actions={actions}
+													modal={true}
+													open={confirming && !confirmed}
+												>
+														<GrazedResult/>
+												</Dialog>
+											</div>
+									}
+								</div>
+							</div>
+					}
+				</CardText>
+			</Card>
+		)
+	}
 }
 
 export default connect(mapStateToProps, actionCreators)(Experiment)

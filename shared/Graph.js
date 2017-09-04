@@ -48,7 +48,7 @@ class Graph extends Component {
           text: multi_text["graph"]["axis"][0],
           enabled: true,
         },
-        min: 0,
+        min: groupSize-1,
         max: maxGrazingNum * (groupSize - 1),
         startOnTick: true,
         endOnTick: true,

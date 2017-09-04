@@ -39,7 +39,9 @@ defmodule TragedyOfTheCommons.Main do
       status: "waiting",
       group: nil,
       answered: false,
+      answers: 0,
       confirmed: false,
+      confirms: 0
     }
   end
 

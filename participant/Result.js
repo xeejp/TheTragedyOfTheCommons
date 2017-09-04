@@ -30,6 +30,7 @@ const Round = ({ index, grazing, profit, groupProfit, style, anotherUsersGrazing
         <td key={'round' + (index * 10) + idx} style={style}>{val}</td>
       ))
     }
+    <td style={style}>{anotherUsersGrazings.reduce((acc, val) => acc + val, 0)+grazing}</td>
     <td className="blue lighten-5" style={style}>{profit}</td>
     <td style={style}>{groupProfit}</td>
   </tr>
@@ -43,11 +44,12 @@ const ResultTable = ({ maxRound, grazings, profits, groupProfits, anotherUsers }
         <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][1]}</th>
         {
           Object.keys(anotherUsers).map((v, i) => (
-            <th key={i} style={{textAlign: "center"}}>{multi_text["result"]["fig"][2] + String(i + 1)}</th>
+            <th key={i} style={{textAlign: "center"}}>{multi_text["result"]["fig"][2] + String(i + 1) + multi_text["result"]["fig"][6]}</th>
           ))
         }
         <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][3]}</th>
         <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][4]}</th>
+        <th style={{textAlign: "center"}}>{multi_text["result"]["fig"][5]}</th>
       </tr>
     </thead>
     <tbody>

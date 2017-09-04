@@ -17,6 +17,10 @@ defmodule TragedyOfTheCommons.Participant do
     group_id = data.participants[id].group
     group = data.groups[group_id]
     members = Enum.reduce(group.members, [], fn i, acc -> List.insert_at(acc, -1, data.participants[i]) end)
+    answers = data.participants[id].answers + 1
+    data = Enum.reduce(group.members, data, fn i, acc ->
+      put_in(acc,[:participants, i, :answers],answers)
+    end)
 
     if Enum.all?(members, fn(p) -> p.answered end) do
       #grazing = Enum.at(participant.grazings, data.round)
@@ -34,6 +38,11 @@ defmodule TragedyOfTheCommons.Participant do
                     [:groups, group_id, :group_profits],
                     List.insert_at(group.group_profits, -1, (data.capacity - sum - data.cost) * sum))
               |> put_in([:groups, group_id, :confirming], true)
+      data = Enum.reduce(group.members, data, fn i, acc ->
+        put_in(acc,[:participants, i, :answers],0)
+      end)
+      results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, data.participants[i].grazings) end)
+      data = data |> put_in([:results, :participants], results)
     end
     data
   end
@@ -43,9 +52,16 @@ defmodule TragedyOfTheCommons.Participant do
     group = data.groups[group_id]
 
     data = put_in(data, [:participants, id, :confirmed], true)
+    confirms = data.participants[id].confirms + 1
+    data = Enum.reduce(group.members, data, fn i, acc ->
+      put_in(acc,[:participants, i, :confirms],confirms)
+    end)
     confirmed = Enum.all?(group.members, &(data.participants[&1].confirmed))
     if confirmed do
       # Game end?
+      data = Enum.reduce(group.members, data, fn i, acc ->
+        put_in(acc,[:participants, i, :confirms],0)
+      end)
       if group.round >= data.max_round - 1 do
         results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, data.participants[i].grazings) end)
         data = data |> put_in([:groups, group_id, :confirming], false)
@@ -90,7 +106,7 @@ defmodule TragedyOfTheCommons.Participant do
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
       ask_student_id: "askStudentId",
-      results: status == "result",
+      results: "results",
       _spread: [[:participants, id], [:groups, group_id]]
     }
   end
@@ -100,4 +116,3 @@ defmodule TragedyOfTheCommons.Participant do
     |> Map.delete(:participants)
   end
 end
-
