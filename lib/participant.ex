@@ -69,6 +69,7 @@ defmodule TragedyOfTheCommons.Participant do
                     |> put_in([:results, :participants], results)
         data = Enum.reduce(group.members, data, fn id, acc ->
                   put_in(acc, [:participants, id, :status], "result")
+                  |> Map.put(:profits_data, [data.participants[id].profits] ++ acc.profits_data)
                 end)
                |> put_in([:results, :groups], data.groups)
       else
@@ -107,6 +108,7 @@ defmodule TragedyOfTheCommons.Participant do
       max_grazing_num: "maxGrazingNum",
       ask_student_id: "askStudentId",
       results: "results",
+      profits_data:  status == "result",
       _spread: [[:participants, id], [:groups, group_id]]
     }
   end

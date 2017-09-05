@@ -26,6 +26,7 @@ defmodule TragedyOfTheCommons.Main do
         groups: %{},
         participants: %{},
       },
+      profits_data: []
     }
   end
 

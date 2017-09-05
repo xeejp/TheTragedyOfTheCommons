@@ -20,6 +20,7 @@ defmodule TragedyOfTheCommons.Host do
   def change_page(data, page) do
     if data.page == "waiting" && page == "description" do
       data = Map.update!(data, :results, fn _ -> %{ groups: %{}, participants: %{} } end)
+             |> Map.update!(:profits_data, fn _ -> [] end)
              |> match()
     end
     data = Map.update!(data, :page, fn _ -> page end)
@@ -82,6 +83,7 @@ defmodule TragedyOfTheCommons.Host do
       max_round: "maxRound",
       max_grazing_num: "maxGrazingNum",
       ask_student_id: "askStudentId",
+      profits_data: "profits_data",
       groups: %{
         _default: %{
           _default: true,

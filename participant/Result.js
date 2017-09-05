@@ -7,6 +7,7 @@ import { Card, CardActions, CardText, CardTitle } from 'material-ui/Card'
 import Graph from '../shared/Graph'
 
 import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+import Rank from '../shared/Rank'
 
 const multi_text = ReadJSON().static_text
 
@@ -115,7 +116,8 @@ class Result extends Component {
               marginBottom: '5%',
             }}
           />
-          <Graph />
+          <Graph /><br />
+          <Rank  my_profit={profits.reduce((acc, val) => acc + val, 0)}/><br />
         </CardText>
       </Card>
     )
