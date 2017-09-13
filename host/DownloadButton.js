@@ -9,7 +9,7 @@ import { ReadJSON, LineBreak } from '../shared/ReadJSON'
 
 const multi_text = ReadJSON().static_text
 
-const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId }) => ({
+const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId, history }) => ({
   page,
   participants,
   participantsNumber,
@@ -20,6 +20,7 @@ const mapStateToProps = ({ page, participants, participantsNumber, maxGrazingNum
   groupSize,
   groupsNumber,
   askStudentId,
+  history,
 })
 
 class DownloadButton extends Component {
@@ -29,7 +30,7 @@ class DownloadButton extends Component {
   }
 
   handleClick() {
-    const { participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId } = this.props
+    const { participants, participantsNumber, maxGrazingNum, maxRound, capacity, cost, groupSize, groupsNumber, askStudentId, history } = this.props
     const fileName = 'TheTragedyOfTheCommons.csv'
 
     let users = Object.keys(participants).map(id => {
@@ -37,6 +38,11 @@ class DownloadButton extends Component {
       return (id + ',' + (askStudentId ? (user.id + ',') : '') + user.grazings.join(',') + ',' + user.profits.join(',') + ',' + user.profits.reduce((prev, curr) => prev + curr, 0) + ',' + user.group)
     })
 
+    let colInterim = multi_text["download"]["ddddt"][0] + (askStudentId ? multi_text["download"]["ddddt"][1] : '') + multi_text["download"]["ddddt"][2] + multi_text["download"]["ddddt"][3] + multi_text["download"]["ddddt"][4]
+    let historyData = history.reverse().map(a => {
+      let str = [a.grazings,a.group_id,a.round+1].join(',')
+      return  a.id + ',' + (askStudentId ? (participants[a.id] + ',') : '') + str
+    })
     let colGrazing = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + multi_text["download"]["dt"][1] + (i + 1) + multi_text["download"]["dt"][0]), '')
     let colProfit = Array.from(Array(maxRound).keys()).reduce((prev, curr, i) => (String(prev) + multi_text["download"]["dt"][2] + (i + 1) + multi_text["download"]["dt"][0]), '')
 
@@ -50,6 +56,8 @@ class DownloadButton extends Component {
       + multi_text["download"]["ddt"][4] + maxGrazingNum + '\n'
       + multi_text["download"]["dddt"][0] + cost + '\n'
       + multi_text["download"]["dddt"][1] + capacity + '\n'
+      + colInterim
+      + historyData.join('\n') + '\n'
       + 'ID,' + (askStudentId ? multi_text["download"]["dddt"][2] : '') + colGrazing + colProfit + multi_text["download"]["dddt"][3]
       + users.join('\n') + '\n'
     let bom = new Uint8Array([0xEF, 0xBB, 0xBF]);

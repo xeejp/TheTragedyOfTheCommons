@@ -22,6 +22,14 @@ defmodule TragedyOfTheCommons.Participant do
       put_in(acc,[:participants, i, :answers],answers)
     end)
 
+    history = %{
+      id: id,
+      grazings: num,
+      group_id: group_id,
+      round: group.round,
+    }
+    data = Map.put(data, :history, [history] ++ data.history)
+
     if Enum.all?(members, fn(p) -> p.answered end) do
       #grazing = Enum.at(participant.grazings, data.round)
       #profit  = (grazings * (data.capacity - sum)) - (data.cost * grazings)

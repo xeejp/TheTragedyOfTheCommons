@@ -21,6 +21,7 @@ defmodule TragedyOfTheCommons.Host do
     if data.page == "waiting" && page == "description" do
       data = Map.update!(data, :results, fn _ -> %{ groups: %{}, participants: %{} } end)
              |> Map.update!(:profits_data, fn _ -> [] end)
+             |> Map.update!(:history, fn _ -> [] end)
              |> match()
     end
     data = Map.update!(data, :page, fn _ -> page end)
