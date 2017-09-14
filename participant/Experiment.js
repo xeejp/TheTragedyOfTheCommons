@@ -83,6 +83,7 @@ class Experiment extends Component {
 													actions={actions}
 													modal={true}
 													open={confirming && !confirmed}
+													autoScrollBodyContent={true}
 												>
 														<GrazedResult/>
 												</Dialog>
