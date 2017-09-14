@@ -9,11 +9,12 @@ import { ReadJSON, LineBreak } from '../shared/ReadJSON'
 
 const multi_text = ReadJSON().static_text
 
-const mapStateToProps = ({ results, maxRound, maxGrazingNum, groupSize }) => ({
+const mapStateToProps = ({ results, maxRound, maxGrazingNum, groupSize, activeParticipantsNumber }) => ({
   results,
   maxRound,
   maxGrazingNum,
   groupSize,
+  activeParticipantsNumber,
 })
 
 class Graph extends Component {
@@ -27,8 +28,10 @@ class Graph extends Component {
   }
 
   render() {
-    const { results, maxRound, maxGrazingNum, groupSize } = this.props
+    const { results, maxRound, maxGrazingNum, groupSize, activeParticipantsNumber } = this.props
     if (!results) return null
+    let size = activeParticipantsNumber % groupSize
+    if(size == 0) size = groupSize
     let config = {
       chart: {
         type: 'scatter',
@@ -48,7 +51,7 @@ class Graph extends Component {
           text: multi_text["graph"]["axis"][0],
           enabled: true,
         },
-        min: groupSize-1,
+        min: size - 1,
         max: maxGrazingNum * (groupSize - 1),
         startOnTick: true,
         endOnTick: true,

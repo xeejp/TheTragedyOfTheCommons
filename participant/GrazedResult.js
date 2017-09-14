@@ -86,7 +86,11 @@ class GrazedResult extends Component {
 					}}
 		  		/>
 				
-				<p>前回までの利益{profits.reduce((acc, val) => acc + val, 0) - profit}ポイント＋今回の利益{profit}ポイント ＝合計　{profits.reduce((acc, val) => acc + val, 0)}ポイント</p>
+				{
+					(round==0)?
+						<p>今回の利益{profit}ポイント</p>
+						:<p>前回までの利益{profits.reduce((acc, val) => acc + val, 0) - profit}ポイント＋今回の利益{profit}ポイント ＝合計　{profits.reduce((acc, val) => acc + val, 0)}ポイント</p>
+				}
 				{(maxRound - round - 1 ==0)?
 						<p>これで実験は終了です。</p>
 				 :(maxRound - round - 1 ==1)?

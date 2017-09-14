@@ -39,18 +39,19 @@ defmodule TragedyOfTheCommons.Host do
   def match(data) do
     %{participants: participants, group_size: group_size} = data
 
-    groups_number = div(Map.size(participants), group_size)
+    groups_number = round(Float.ceil(Map.size(participants)/group_size))
     groups = participants
               |> Enum.map(&elem(&1, 0)) # [id...]
               |> Enum.shuffle
               |> Enum.map_reduce(0, fn(p, acc) -> {{acc, p}, acc + 1} end) |> elem(0) # [{0, p0}, ..., {n-1, pn-1}]
-              |> Enum.group_by(fn {i, p} -> Integer.to_string(min(div(i, group_size), groups_number - 1)) end, fn {i, p} -> p end) # %{0 => [p0, pm-1], ..., l-1 => [...]}
+              |> Enum.group_by(fn {i, p} -> Integer.to_string(div(i, group_size)) end, fn {i, p} -> p end) # %{0 => [p0, pm-1], ..., l-1 => [...]}
 
     updater = fn participant, group ->
       %{ participant |
         group: group,
         answered: false,
         confirmed: false,
+        is_finish_description: false,
         profits: [],
         grazings: [],
         answers: 0,

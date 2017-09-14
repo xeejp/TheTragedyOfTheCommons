@@ -55,7 +55,7 @@ const ResultTable = ({ maxRound, grazings, profits, groupProfits, anotherUsers }
     </thead>
     <tbody>
       {
-        Array.from(Array(maxRound).keys()).map((v, i, ary) => (
+        Array.from(Array(Math.min(grazings.length,profits.length,groupProfits.length)).keys()).map((v, i, ary) => (
           <Round
             index={i + 1}
             grazing={grazings[i]}
@@ -96,6 +96,7 @@ class Result extends Component {
     let anotherUsers = {}
     members.forEach(function(_id) {
       anotherUsers[_id] = results.participants[_id]
+      if(!anotherUsers[_id]) anotherUsers[_id] = []
     })
     delete anotherUsers[uid]
     return (

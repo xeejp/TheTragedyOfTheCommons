@@ -38,7 +38,7 @@ const RankTable = ({ data, index, style, my_profit })=> (
                }
                {
                    
-                (index != -1 && data[index].rank > 10)? 
+                (index != -1 && data[index] && data[index].rank > 10)? 
                     (<tr style={style} className="blue lighten-5">
                         <td style={style}>{data[index].rank}</td>
                         <td style={style}>{data[index].value}</td>
@@ -60,7 +60,7 @@ class Rank extends Component {
 
   render() {
     const { profits_data, my_profit } = this.props
-    if(profits_data == undefined) return null
+    if(!profits_data) return null
     let data = profits_data.map(
         a => ({value: a.reduce((acc, val) => acc + val, 0),rank:1})
     ).sort(
