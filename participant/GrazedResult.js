@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import Divider from 'material-ui/Divider'
-
+import Paper   from 'material-ui/Paper'
 import RaisedButton from 'material-ui/RaisedButton'
 
 import { updateConfirm } from './actions'
@@ -14,6 +14,21 @@ const multi_text = ReadJSON().static_text
 
 const actionCreators = {
 	updateConfirm,
+}
+
+const PaperStyle = {
+	height: 50,
+	width: 50,
+	margin: 5,
+	display: 'inline-block',
+};
+
+const PaperTextStyle = {
+	height: 50,
+	width: 50,
+	display: 'table-cell',
+	verticalAlign: 'middle',
+	textAlign: 'center',
 }
 
 const mapStateToProps = ({ round, grazings, members, results, profits, groupProfits, confirming, confirmed, uid, maxRound}) => ({
@@ -34,23 +49,45 @@ const GrazedResultTable = ({style, grazing, anotherUsers, anotherUsersGrazings, 
 		<thead>
 			<tr>
 				<th style={style}>{multi_text["experiment"]["fig"][0]}</th>
-				<th style={style}></th>				
+				<th style={style}>あなた以外の農家の放牧数</th>				
 				<th style={style}>{multi_text["experiment"]["fig"][1]}</th>
 				<th style={style}>{multi_text["experiment"]["fig"][2]}</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td style={style}>{grazing}</td>
-				<td>
+				<td style={{textAlign: 'center'}}>
+					<Paper style={PaperStyle} circle={true}>
+						<span style={PaperTextStyle}>
+							{grazing}
+						</span>
+					</Paper>
+				</td>
+				<td style={{textAlign: 'center'}}>
 				{
 					anotherUsersGrazings && anotherUsersGrazings.map((val, idx) => (
-						<td key={"u"+idx} style={style}>{val}</td>
+						<Paper key={"u"+idx} style={PaperStyle} circle={true}>
+							<span style={PaperTextStyle}>
+								{val}
+							</span>
+						</Paper>
 					))
 				}
 				</td>
-				<td style={style}>{anotherUsersGrazings.reduce((acc, val) => acc + val, 0)}</td>
-				<td style={style}>{profit}</td>
+				<td style={{textAlign: 'center'}}>
+					<Paper style={PaperStyle} circle={true}>
+						<span style={PaperTextStyle}>
+							{anotherUsersGrazings.reduce((acc, val) => acc + val, 0)}
+						</span>
+					</Paper>
+				</td>
+				<td style={{textAlign: 'center' }}>
+					<Paper style={PaperStyle} circle={true}>
+						<span style={PaperTextStyle}>
+							{profit}
+						</span>
+					</Paper>
+				</td>
 			</tr>
 		</tbody>
 	</table>
