@@ -52,7 +52,7 @@ class Experiment extends Component {
 		const { confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, profits, grazings, askStudentId, groupSize, members } = this.props
 		const actions = [
 			<FlatButton
-				label="OK"
+				label={((round + 1) == maxRound)?"実験結果へ":"OK"}
 				primary={true}
 				onTouchTap={this.handleClose.bind(this)}
 			/>
