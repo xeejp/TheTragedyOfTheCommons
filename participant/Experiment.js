@@ -52,7 +52,7 @@ class Experiment extends Component {
 		const { confirming, confirmed, confirms, maxRound, round, participantsNumber, id, answered, answers, profits, grazings, askStudentId, groupSize, members } = this.props
 		const actions = [
 			<FlatButton
-				label={((round + 1) == maxRound)?"実験結果へ":"OK"}
+				label={((round + 1) == maxRound)?multi_text["experiment"]["result_label"]:multi_text["experiment"]["next_label"]}
 				primary={true}
 				onTouchTap={this.handleClose.bind(this)}
 			/>
@@ -72,8 +72,8 @@ class Experiment extends Component {
 											: <div>
 													<p>{multi_text["experiment"]["end"]}</p>
 													{(confirming)?
-														<p>(確認：{confirms}人/{members.length}人中)</p>
-														:<p>(解答済み：{answers}人/{members.length}人中)</p>
+											<p>({multi_text["experiment"]["chip"][0] + confirms + multi_text["experiment"]["chip"][1] + '/' +  members.length + multi_text["experiment"]["chip"][2]})</p>
+											: <p>({multi_text["experiment"]["chip"][3] + answers + multi_text["experiment"]["chip"][2] + '/' + members.length + multi_text["experiment"]["chip"][2]})</p>
 													}
 													<div style={{textAlign: "center"}}>
 													<CircularProgress />

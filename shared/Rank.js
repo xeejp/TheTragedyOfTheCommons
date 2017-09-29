@@ -15,8 +15,8 @@ const RankTable = ({ data, index, style, my_profit })=> (
     <table className="highlight">
         <thead>
             <tr>
-                <th style={style}>{"順位"}</th>
-                <th style={style}>{"総利益"}</th>
+                <th style={style}>{multi_text["rank"][0]}</th>
+                <th style={style}>{multi_text["rank"][1]}</th>
             </tr>
         </thead>
         <tbody>
@@ -77,7 +77,7 @@ class Rank extends Component {
     return (
         <div>
             <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange.bind(this)}>
-                <CardHeader title={"ランキング"} actAsExpander={true} showExpandableButton={true} />
+                <CardHeader title={multi_text["rank"][2]} actAsExpander={true} showExpandableButton={true} />
                 <CardText expandable={true}>
                     <RankTable
                         data={data}

@@ -49,7 +49,7 @@ const GrazedResultTable = ({style, grazing, anotherUsers, anotherUsersGrazings, 
 		<thead>
 			<tr>
 				<th style={style}>{multi_text["experiment"]["fig"][0]}</th>
-				<th style={style}>あなた以外の農家の放牧数</th>				
+				<th style={style}>{multi_text["experiment"]["fig"][3]}</th>				
 				<th style={style}>{multi_text["experiment"]["fig"][1]}</th>
 				<th style={style}>{multi_text["experiment"]["fig"][2]}</th>
 			</tr>
@@ -136,14 +136,14 @@ class GrazedResult extends Component {
 				
 				{
 					(round==0)?
-						<p>今回の利益:{profit}ポイント</p>
-						:<p>前回までの利益{profits.reduce((acc, val) => acc + val, 0) - profit}ポイント＋今回の利益{profit}ポイント ＝合計　{profits.reduce((acc, val) => acc + val, 0)}ポイント</p>
+						<p>{multi_text["experiment"]["result"][1] + ':' + profit + multi_text["experiment"]["result"][2]}</p>
+						: <p>{multi_text["experiment"]["result"][3] + (profits.reduce((acc, val) => acc + val, 0) - profit) + multi_text["experiment"]["result"][2] + '+' + multi_text["experiment"]["result"][1] + profit + multi_text["experiment"]["result"][2] + '=' + multi_text["experiment"]["result"][4] + profits.reduce((acc, val) => acc + val, 0) + multi_text["experiment"]["result"][2]}</p>
 				}
 				{(maxRound - round - 1 ==0)?
-						<p>これで実験は終了です。</p>
+					<p>{multi_text["experiment"]["result"][5]}</p>
 				 :(maxRound - round - 1 ==1)?
-				 		<p>次が最後のラウンドです。</p>
-						:<p>あと{maxRound - round - 1}ラウンドあります。</p>
+				 		<p>{multi_text["experiment"]["result"][6]}</p>
+						:<p>{multi_text["experiment"]["result"][7] + (maxRound - round - 1) + multi_text["experiment"]["result"][8]}</p>
 				}
 				<br/>
 				<ProfitTable 
