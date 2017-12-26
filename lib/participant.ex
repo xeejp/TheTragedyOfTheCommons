@@ -79,9 +79,9 @@ defmodule TragedyOfTheCommons.Participant do
 			if group.round >= data.max_round - 1 do
 				results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, data.participants[i].grazings) end)
 				data = data |> put_in([:groups, group_id, :confirming], false)
-										|> put_in([:groups, group_id, :group_status], "result")
-										|> put_in([:results, :participants], results)
-										|> put_in([:results, :groups], data.groups)
+							|> put_in([:groups, group_id, :group_status], "result")
+				data = data |> put_in([:results, :participants], results)
+							|> put_in([:results, :groups], data.groups)
 
 				data =	Enum.reduce(group.members, data, fn id, acc ->
 									put_in(acc, [:participants, id, :status], "result")
@@ -105,6 +105,7 @@ defmodule TragedyOfTheCommons.Participant do
 		if (data.page == "result"), do: status = "result"
 		%{
 			_default: true,
+			active_participants_number: "activeParticipantsNumber",
 			participants: %{
 				id => true
 			},
