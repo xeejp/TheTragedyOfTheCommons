@@ -8,16 +8,18 @@ import SwipeableViews from 'react-swipeable-views'
 import CircularProgress from 'material-ui/CircularProgress'
 import {Card, CardHeader, CardText} from 'material-ui/Card'
 
-import { ReadJSON, LineBreak } from '../shared/ReadJSON'
+import { ReadJSON, LineBreak, InsertVariable } from '../shared/ReadJSON'
 
 const multi_text = ReadJSON().static_text
 
 const actionCreators = {
   finishDescription
 }
-const mapStateToProps = ({ description, is_finish_description }) => ({
+const mapStateToProps = ({ description, is_finish_description, groupSize, maxGrazingNum }) => ({
   description,
-  is_finish_description
+  is_finish_description,
+  groupSize,
+  maxGrazingNum
 })
 
 class Description extends Component {
@@ -47,7 +49,7 @@ class Description extends Component {
   }
 
   render() {
-    const { description, is_finish_description } = this.props
+    const { description, is_finish_description, groupSize, maxGrazingNum } = this.props
     if (!is_finish_description && this.state.slideIndex == description.length) {
       this.props.finishDescription()
     }
@@ -81,7 +83,8 @@ class Description extends Component {
                     subtitle={multi_text["description"]["card"][1] + (index+1) + "/" + (description.length + 1)}
                   />
                   <CardText key={"text-" + String(index)} expandable={false}>
-                    {desc.text.split('\n').map(line => <p key={"text-lines-" + String(line)}>{line}</p>)}
+                    {(desc.id == 2) ? InsertVariable(desc.text, { groupNum: groupSize, grazingNum: maxGrazingNum }, null).split('\n').map(line => <p key={"text-lines-" + String(line)}>{line}</p>)
+                    : desc.text.split('\n').map(line => <p key={"text-lines-" + String(line)}>{line}</p>)}
                   </CardText>
                 </div>
               )).concat(descList)
