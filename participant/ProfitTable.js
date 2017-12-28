@@ -27,17 +27,18 @@ class ProfitTable extends Component {
 
     const { value, lineValue, cost, maxGrazingNum, members, capacity } = this.props
     const groupSize = members.length
-    const sumOfCattles = (groupSize - 1) * maxGrazingNum
+    const minOfCattles = (groupSize - 1) * 1    
+    const maxOfCattles = (groupSize - 1) * maxGrazingNum
 
     let header = []
-    for (let i = 0; i <= sumOfCattles; ++i) {
+    for (let i = minOfCattles; i <= maxOfCattles; ++i) {
       header.push(<th key={uuid()} style={(lineValue == i) ? {backgroundColor: '#f2f2f2', textAlign: 'center'}:{textAlign: 'center'}}>{i}</th>)
     }
     let body = []
     for (let i = 1; i <= maxGrazingNum; ++i) {
       let line = []
       line.push(<td key={uuid()} style={{borderRight: 'solid 1px silver'}}>{i}</td>)
-      for (let j = 0; j <= sumOfCattles; j++) {
+      for (let j = minOfCattles; j <= maxOfCattles; j++) {
         line.push(<td key={uuid()} style={(lineValue == j) ? {backgroundColor: '#f2f2f2', textAlign: 'center'}:{textAlign: 'center'}}>{i * (capacity - (i + j)) - cost * i}</td>)
       }
       body.push(<tr key={uuid()} style={(value == i) ? {backgroundColor: '#f2f2f2'} : null}>{line}</tr>)
@@ -49,7 +50,7 @@ class ProfitTable extends Component {
           <thead>
             <tr>
               <th></th>
-              <th style={{textAlign: 'center'}} colSpan={sumOfCattles - 2}>{multi_text["pasture_form"][1]}</th>
+              <th style={{textAlign: 'center'}} colSpan={maxOfCattles - 2}>{multi_text["pasture_form"][1]}</th>
             </tr>
             <tr>
               <th key={uuid()}></th>
