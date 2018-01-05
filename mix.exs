@@ -20,7 +20,7 @@ defmodule TragedyOfTheCommons.Mixfile do
 
   defp deps do
     [{:xeethemescript, "~> 0.3.0"},
-     {:json_diff_ex, "~> 0.6.0"},
+     {:json_diff_ex, "~> 0.6.2"},
      {:transmap, "~> 0.4.0"}]
   end
 end
