@@ -60,8 +60,10 @@ defmodule TragedyOfTheCommons.Main do
   def join(data, id) do
     unless Map.has_key?(data.participants, id) do
       new = new_participant(id)
-      if data.page == "waiting" do
-        data = Map.update!(data, :active_participants_number, fn n -> n + 1 end)
+      data = if data.page == "waiting" do
+        Map.update!(data, :active_participants_number, fn n -> n + 1 end)
+      else
+        data
       end
 
       data

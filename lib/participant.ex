@@ -53,12 +53,15 @@ defmodule TragedyOfTheCommons.Participant do
 			data = data |> put_in([:results, :participants], results)
 
 			if group.round >= data.max_round - 1 do
-				data =	Enum.reduce(group.members, data, fn id, acc ->
-									Map.put(acc,:profits_data, [data.participants[id].profits] ++ acc.profits_data)
-								end)
+				Enum.reduce(group.members, data, fn id, acc ->
+					Map.put(acc,:profits_data, [data.participants[id].profits] ++ acc.profits_data)
+				end)
+			else
+				data
 			end
+		else
+			data
 		end
-		data
 	end
 
 	def update_confirm(data, id) do
@@ -80,7 +83,7 @@ defmodule TragedyOfTheCommons.Participant do
 				results = Enum.reduce(group.members, data.results.participants, fn i, acc -> Map.put(acc, i, data.participants[i].grazings) end)
 				data = data |> put_in([:groups, group_id, :confirming], false)
 							|> put_in([:groups, group_id, :group_status], "result")
-				data = data |> put_in([:results, :participants], results)
+							|> put_in([:results, :participants], results)
 							|> put_in([:results, :groups], data.groups)
 
 				data =	Enum.reduce(group.members, data, fn id, acc ->
@@ -95,8 +98,9 @@ defmodule TragedyOfTheCommons.Participant do
 							 |> update_in([:groups, group_id, :round], &(&1 + 1))
 							 |> put_in([:groups, group_id, :confirming], false)
 			end
+		else
+			data
 		end
-		data
 	end
 
 	def get_filter(data, id) do

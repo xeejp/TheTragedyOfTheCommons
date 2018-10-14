@@ -176,16 +176,16 @@ class ConfigEditor extends Component {
         label={multi_text["config_button"][0]}
         primary={true}
         keyboardFocused={true}
-        onTouchTap={this.submit.bind(this)}
+        onClick={this.submit.bind(this)}
         disabled={this.state.disabled}
       />,
       <RaisedButton
         label={multi_text["config_button"][1]}
-        onTouchTap={this.handleClose.bind(this)}
+        onClick={this.handleClose.bind(this)}
         />,
       <RaisedButton
         label={multi_text["config_button"][2]}
-        onTouchTap={this.reset.bind(this)}
+        onClick={this.reset.bind(this)}
       />
     ]
     return (

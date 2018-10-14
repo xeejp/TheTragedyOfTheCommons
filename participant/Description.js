@@ -62,7 +62,7 @@ class Description extends Component {
         <CardText expandable={false}>
           <p>{multi_text["description"]["card"][2]}</p>
           <div style={{textAlign: "center"}}>
-            <CircularProgress />
+            <CircularProgress size={140} thickness={5.0}/> 
           </div>
         </CardText>
       </div>
@@ -94,13 +94,13 @@ class Description extends Component {
         <RaisedButton
           label={multi_text["description"]["button"][0]}
           style={{float: "left"}}
-          onTouchTap={this.handleBack.bind(this)}
+          onClick={this.handleBack.bind(this)}
           disabled={this.state.slideIndex == 0}
         />
         <RaisedButton
           label={multi_text["description"]["button"][1]}
           style={{float: "right"}}
-          onTouchTap={this.handleNext.bind(this)}
+          onClick={this.handleNext.bind(this)}
           primary={true}
           disabled={this.state.slideIndex == description.length}
         />

@@ -54,7 +54,7 @@ class Experiment extends Component {
 			<FlatButton
 				label={((round + 1) == maxRound)?multi_text["experiment"]["result_label"]:multi_text["experiment"]["next_label"]}
 				primary={true}
-				onTouchTap={this.handleClose.bind(this)}
+				onClick={this.handleClose.bind(this)}
 			/>
 		]
 		return (
@@ -76,7 +76,7 @@ class Experiment extends Component {
 											: <p>({multi_text["experiment"]["chip"][3] + answers + multi_text["experiment"]["chip"][2] + '/' + members.length + multi_text["experiment"]["chip"][2]})</p>
 													}
 													<div style={{textAlign: "center"}}>
-													<CircularProgress />
+													<CircularProgress size={140} thickness={5.0}/>
 												</div>
 												<Dialog
 													title={multi_text["experiment"]["dialog"]}
